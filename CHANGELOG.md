@@ -1,6 +1,18 @@
+## v0.7.4.beta (2015-12-03)
+
+* Adds the UID from the session and request to be used by the Auth Workflow when present
+
 ## v0.7.3 (2015-11-30)
 * Upgrade to devise_g5_authenticatable to fix regression bug https://github.com/G5/devise_g5_authenticatable/pull/23
 * Upgrade to omniauth_g5 to fix regression bug https://github.com/G5/omniauth-g5/pull/10
+
+## v0.7.2 (2015-06-23)
+
+* Removed pinned g5_updatalbe version from 0.6.0 to > 0.6.0
+
+## v0.7.1 (2015-06-08)
+
+* Fixed bug when listing clients
 
 ## v0.7.0 (2015-06-04)
 
