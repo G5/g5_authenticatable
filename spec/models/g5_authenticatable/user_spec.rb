@@ -67,6 +67,7 @@ describe G5Authenticatable::User do
       OmniAuth::AuthHash.new(
         {
           'provider' => new_user_attributes[:provider],
+          'uid' => new_user_attributes[:uid],
           'info' => {
             'email' => new_user_attributes[:email],
             'name' => "#{new_user_attributes[:first_name]} #{new_user_attributes[:last_name]}",
@@ -83,7 +84,7 @@ describe G5Authenticatable::User do
             'title' => new_user_attributes[:title],
             'organization_name' => new_user_attributes[:organization_name],
             'roles' => [
-              { 'name' => new_role_attributes[:name], 'type' => 'GLOBAL', 'urn' => nil }
+              {'name' => new_role_attributes[:name], 'type' => 'GLOBAL', 'urn' => nil}
             ],
             'raw_info' => {}
           }
@@ -94,24 +95,7 @@ describe G5Authenticatable::User do
     let(:new_role_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_role) }
 
     context 'when there is auth data in the session' do
-      let(:session) do
-        { 'omniauth.auth' => auth_data }
-      end
-
-      context 'with UID' do
-        before do
-          auth_data['uid'] = new_user_attributes[:uid]
-        end
-        it 'should set the uid from the session data' do
-          expect(new_user.uid).to eq(new_user_attributes[:uid])
-        end
-      end
-
-      context 'without UID' do
-        it "won't set the uid from the session data" do
-          expect(new_user.uid).to be_nil
-        end
-      end
+      let(:session) { {'omniauth.auth' => auth_data} }
 
       it 'should initialize a new user' do
         expect(new_user).to be_a_new_record
@@ -123,6 +107,10 @@ describe G5Authenticatable::User do
 
       it 'should set the provider from the session data' do
         expect(new_user.provider).to eq(new_user_attributes[:provider])
+      end
+
+      it 'should set the uid from the session data' do
+        expect(new_user.uid).to eq(new_user_attributes[:uid])
       end
 
       it 'should set the email from the session data' do
@@ -222,7 +210,7 @@ describe G5Authenticatable::User do
             'title' => updated_attributes[:title],
             'organization_name' => updated_attributes[:organization_name],
             'roles' => [
-              { name: updated_role_name, type: 'GLOBAL', urn: nil }
+              {name: updated_role_name, type: 'GLOBAL', urn: nil}
             ],
             'raw_info' => {}
           }
@@ -489,4 +477,5 @@ describe G5Authenticatable::User do
       end
     end
   end
+  
 end

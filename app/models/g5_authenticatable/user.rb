@@ -15,11 +15,13 @@ module G5Authenticatable
         user.assign_attributes(extended_auth_attributes(auth_data))
         user.update_roles_from_auth(auth_data)
       end
+
       user
     end
 
     def self.find_and_update_for_g5_oauth(auth_data)
       user = super(auth_data)
+
       if user
         user.update_attributes(extended_auth_attributes(auth_data))
         user.update_roles_from_auth(auth_data)
@@ -31,7 +33,17 @@ module G5Authenticatable
     def update_roles_from_auth(auth_data)
       roles.clear
       auth_data.extra.roles.each do |role|
-        role.type == 'GLOBAL' ? add_role(role.name) : add_scoped_role(role)
+        if(role.type == 'GLOBAL')
+          add_role(role.name)
+        else
+          begin
+            the_class = Object.const_get(role.type)
+            resource = the_class.where(urn: role.urn).first
+            add_role(role.name, resource)
+          rescue => e
+            Rails.logger.error(e)
+          end
+        end
       end
     end
 
@@ -40,24 +52,17 @@ module G5Authenticatable
     end
 
     private
-
     def self.extended_auth_attributes(auth_data)
-      h = {
+      {
         first_name: auth_data.info.first_name,
         last_name: auth_data.info.last_name,
         phone_number: auth_data.info.phone,
         title: auth_data.extra.title,
         organization_name: auth_data.extra.organization_name
       }
-      auth_data.uid.present? ? h.merge!(uid: auth_data.uid) : h
     end
 
-    def add_scoped_role(role)
-      the_class = Object.const_get(role.type)
-      resource = the_class.where(urn: role.urn).first
-      add_role(role.name, resource)
-    rescue => e
-      Rails.logger.error(e)
-    end
+
+
   end
 end
