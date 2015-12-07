@@ -237,6 +237,8 @@ Devise.setup do |config|
   #
   config.warden do |manager|
     # Add custom warden configuration here
+    manager.strategies.add(:impersonate_strategy, Devise::Strategies::ImpersonateStrategy)
+    manager.default_strategies(:scope => :user).unshift :impersonate_strategy
   end
 
 
