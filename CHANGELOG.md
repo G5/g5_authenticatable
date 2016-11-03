@@ -1,7 +1,16 @@
+## v0.9.0 (2016-11-03)
+
+* Refactor custom mapping logic into devise_g5_authenticatable callbacks
+  ([#47](https://github.com/G5/g5_authenticatable/pull/47))
+
+## v0.8.0 (2016-03-07)
+
+* Location role policies
+  ([#46](https://github.com/G5/g5_authenticatable/pull/46))
+
 ## v0.7.5.beta (2016-01-15)
 
 * Fixes bug that granted higher permissions when the resource for a scoped roles didn't exist.
-
 
 ## v0.7.4 (2015-12-09)
 
