@@ -10,6 +10,7 @@ gem 'rails', '4.2.0'
 gem 'jquery-rails'
 gem 'pg'
 gem 'grape'
+gem 'active_model_serializers', '<= 0.10.0' # For compatibility with ruby 2.0.0
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1'

@@ -9,25 +9,14 @@ module G5Authenticatable
 
     GLOBAL_ROLE = 'GLOBAL'
 
-    def self.new_with_session(params, session)
-      user = super(params, session)
-      auth_data = session['omniauth.auth']
-
-      if auth_data
-        user.assign_attributes(extended_auth_attributes(auth_data))
-        user.update_roles_from_auth(auth_data)
-      end
-      user
-    end
-
-    def self.find_and_update_for_g5_oauth(auth_data)
-      user = super(auth_data)
-      if user
-        user.update_attributes(extended_auth_attributes(auth_data))
-        user.update_roles_from_auth(auth_data)
-      end
-
-      user
+    def attributes_from_auth(auth_data)
+      super(auth_data).merge({
+        first_name: auth_data.info.first_name,
+        last_name: auth_data.info.last_name,
+        phone_number: auth_data.info.phone,
+        title: auth_data.extra.title,
+        organization_name: auth_data.extra.organization_name
+      })
     end
 
     def update_roles_from_auth(auth_data)
@@ -50,18 +39,6 @@ module G5Authenticatable
     end
 
     private
-
-    def self.extended_auth_attributes(auth_data)
-      h = {
-        first_name: auth_data.info.first_name,
-        last_name: auth_data.info.last_name,
-        phone_number: auth_data.info.phone,
-        title: auth_data.extra.title,
-        organization_name: auth_data.extra.organization_name
-      }
-      auth_data.uid.present? ? h.merge!(uid: auth_data.uid) : h
-    end
-
     def add_scoped_role(role)
       the_class = Object.const_get(role.type)
       resource = the_class.where(urn: role.urn).first

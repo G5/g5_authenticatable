@@ -59,6 +59,71 @@ describe G5Authenticatable::User do
     expect(user.organization_name).to eq(user_attributes[:organization_name])
   end
 
+  describe '#attributes_from_auth' do
+    subject(:attributes_from_auth) { user.attributes_from_auth(auth_data) }
+
+    let(:auth_data) do
+      OmniAuth::AuthHash.new(
+        'uid' => new_user_attributes[:uid],
+        'provider' => new_user_attributes[:provider],
+        'info' => {
+          'email' => new_user_attributes[:email],
+          'name' => "#{new_user_attributes[:first_name]} #{new_user_attributes[:last_name]}",
+          'first_name' => new_user_attributes[:first_name],
+          'last_name' => new_user_attributes[:last_name],
+          'phone' => new_user_attributes[:phone_number]
+        },
+        'credentials' => {
+          'token' => new_user_attributes[:g5_access_token],
+          'expires' => true,
+          'expires_at' => Time.now + 1000
+        },
+        'extra' => {
+          'title' => new_user_attributes[:title],
+          'organization_name' => new_user_attributes[:organization_name],
+          'roles' => [
+            { 'name' => new_role_attributes[:name], 'type' => 'GLOBAL', 'urn' => nil }
+          ],
+          'raw_info' => {}
+        })
+    end
+
+    let(:new_user_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_user) }
+    let(:new_role_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_role) }
+
+    it 'has the correct uid' do
+      expect(attributes_from_auth[:uid]).to eq(new_user_attributes[:uid])
+    end
+
+    it 'has the correct provider' do
+      expect(attributes_from_auth[:provider]).to eq(new_user_attributes[:provider])
+    end
+
+    it 'has the correct first_name' do
+      expect(attributes_from_auth[:first_name]).to eq(new_user_attributes[:first_name])
+    end
+
+    it 'has the correct last_name' do
+      expect(attributes_from_auth[:last_name]).to eq(new_user_attributes[:last_name])
+    end
+
+    it 'has the correct email' do
+      expect(attributes_from_auth[:email]).to eq(new_user_attributes[:email])
+    end
+
+    it 'has the correct phone_number' do
+      expect(attributes_from_auth[:phone_number]).to eq(new_user_attributes[:phone_number])
+    end
+
+    it 'has the correct title' do
+      expect(attributes_from_auth[:title]).to eq(new_user_attributes[:title])
+    end
+
+    it 'has the correct organization_name' do
+      expect(attributes_from_auth[:organization_name]).to eq(new_user_attributes[:organization_name])
+    end
+  end
+
   describe '.new_with_session' do
     subject(:new_user) { G5Authenticatable::User.new_with_session(params, session) }
 
@@ -275,6 +340,7 @@ describe G5Authenticatable::User do
         {
           uid: user.uid,
           provider: user.provider,
+          email: 'updated.email@test.host',
           g5_access_token: 'updatedtoken42',
           first_name: 'Updated First Name',
           last_name: 'Updated Last Name',
@@ -302,8 +368,8 @@ describe G5Authenticatable::User do
         expect { updated_user }.to_not change { user.reload.provider }
       end
 
-      it 'should not change the email' do
-        expect { updated_user }.to_not change { user.reload.email }
+      it 'should update the email' do
+        expect { updated_user }.to change { user.reload.email }.to(updated_attributes[:email])
       end
 
       it 'should update the first name' do
