@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603224036) do
+ActiveRecord::Schema.define(version: 20161209070749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,26 @@ ActiveRecord::Schema.define(version: 20150603224036) do
   add_index "g5_updatable_clients", ["uid"], name: "index_g5_updatable_clients_on_uid", using: :btree
   add_index "g5_updatable_clients", ["urn"], name: "index_g5_updatable_clients_on_urn", using: :btree
 
+  create_table "g5_updatable_hub_amenities", force: :cascade do |t|
+    t.integer  "external_id"
+    t.string   "name"
+    t.string   "icon"
+    t.datetime "external_updated_at"
+    t.datetime "external_created_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "g5_updatable_hub_amenities", ["external_id"], name: "index_g5_updatable_hub_amenities_on_external_id", unique: true, using: :btree
+
+  create_table "g5_updatable_hub_amenities_locations", force: :cascade do |t|
+    t.integer "g5_updatable_hub_amenity_id"
+    t.integer "g5_updatable_location_id"
+  end
+
+  add_index "g5_updatable_hub_amenities_locations", ["g5_updatable_hub_amenity_id"], name: "updatable_amenities_loc_amen_id", using: :btree
+  add_index "g5_updatable_hub_amenities_locations", ["g5_updatable_location_id"], name: "updatable_amenities_loc_loc_id", using: :btree
+
   create_table "g5_updatable_locations", force: :cascade do |t|
     t.string   "uid"
     t.string   "urn"
@@ -77,8 +97,11 @@ ActiveRecord::Schema.define(version: 20150603224036) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "flat_amenity_names"
+    t.string   "client_urn"
   end
 
+  add_index "g5_updatable_locations", ["client_urn"], name: "index_g5_updatable_locations_on_client_urn", using: :btree
   add_index "g5_updatable_locations", ["name"], name: "index_g5_updatable_locations_on_name", using: :btree
   add_index "g5_updatable_locations", ["uid"], name: "index_g5_updatable_locations_on_uid", using: :btree
   add_index "g5_updatable_locations", ["urn"], name: "index_g5_updatable_locations_on_urn", using: :btree

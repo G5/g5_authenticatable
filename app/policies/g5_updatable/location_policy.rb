@@ -20,7 +20,7 @@ module G5Updatable
 
       def locations_from_client_roles
         G5Updatable::Location
-          .joins('INNER JOIN g5_updatable_clients as c on g5_updatable_locations.client_uid=c.uid')
+          .joins('INNER JOIN g5_updatable_clients as c on g5_updatable_locations.client_urn=c.urn')
           .joins('INNER JOIN g5_authenticatable_roles as r on r.resource_id=c.id')
           .joins('INNER JOIN g5_authenticatable_users_roles as ur on r.id=ur.role_id')
           .where('ur.user_id=?',user.id)
@@ -33,8 +33,6 @@ module G5Updatable
         location_ids = locations_from_client_roles.map(&:id) | location_roles.map(&:resource_id)
         G5Updatable::Location.where(id: location_ids)
       end
-
     end
-
   end
 end
