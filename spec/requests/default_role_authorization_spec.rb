@@ -19,7 +19,7 @@ describe 'Default role-based authorization API' do
       end
 
       it 'includes all posts' do
-        expect(json).to include(
+        expect(json['posts']).to include(
           hash_including('id' => post.id,
                          'author_id' => post.author.id,
                          'content' => post.content),
