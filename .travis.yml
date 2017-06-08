@@ -1,7 +1,7 @@
 language: ruby
 rvm:
   - 2.3.4
-gemfiles:
+gemfile:
   - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_4.2.gemfile
 before_install:
