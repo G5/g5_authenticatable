@@ -20,8 +20,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'devise_g5_authenticatable', '~> 0.3.0'
-  spec.add_dependency 'omniauth-g5', '~> 0.3.1'
+  spec.add_dependency 'devise_g5_authenticatable', '1.0.0.pre.1'
   spec.add_dependency 'g5_authenticatable_api', '~> 0.4.1'
   spec.add_dependency 'rolify', '~> 4.0'
   spec.add_dependency 'pundit', '~> 1.0'
