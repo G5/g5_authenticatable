@@ -57,3 +57,10 @@ RSpec.configure do |config|
 
   config.after(:suite) { WebMock.disable! }
 end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end

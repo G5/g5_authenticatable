@@ -28,7 +28,7 @@ group :test do
   gem 'generator_spec'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-http', require: 'rspec/http'
-  gem 'shoulda-matchers', '~> 2.6'
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'simplecov', require: false
 end
 
