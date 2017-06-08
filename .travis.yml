@@ -1,18 +1,18 @@
 language: ruby
 rvm:
-  - 2.0.0
-  - 2.1
-  - 2.2
+  - 2.3.4
+gemfiles:
+  - gemfiles/rails_4.1.gemfile
+  - gemfiles/rails_4.2.gemfile
 before_install:
   - gem install bundler
-script:
-  - RAILS_ENV=test bundle exec rake app:db:setup
-  - bundle exec rspec spec
 before_script:
   - cp spec/dummy/config/database.yml.ci spec/dummy/config/database.yml
-  - psql -c 'create database g5_authenticatable_test;' -U postgres
+  - RAILS_ENV=test bundle exec rake app:db:create app:db:migrate
+script:
+  - bundle exec rspec spec
+after_script:
+  - RAILS_ENV=test bundle exec rake app:db:drop
 env:
   global:
     - DEVISE_SECRET_KEY=foo
-addons:
-  postgresql: "9.2"

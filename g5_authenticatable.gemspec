@@ -1,4 +1,6 @@
 # coding: utf-8
+# frozen_string_literal: true
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'g5_authenticatable/version'
@@ -9,9 +11,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ['maeve']
   spec.email         = ['maeve.revels@getg5.com']
   spec.summary       = 'An authentication engine for G5 applications.'
-  spec.description   = %q{An engine that provides a basic User model,
-                          authentication logic, and remote credential
-                          management for G5 applications.}
+  spec.description   = 'An engine that provides a basic User model, ' \
+                       'authentication logic, and remote credential ' \
+                       'management for G5 applications.'
   spec.homepage      = 'https://github.com/G5/g5_authenticatable'
   spec.license       = 'MIT'
 
