@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'factory_girl_rails'
 
 FactoryGirl.define do
@@ -11,10 +13,6 @@ FactoryGirl.define do
     phone_number '(555) 867-5309'
     title 'Minister of Funny Walks'
     organization_name 'Department of Redundancy Department'
-
-    after(:build) do |user|
-      user.roles << FactoryGirl.build(:g5_authenticatable_viewer_role)
-    end
   end
 
   factory :g5_authenticatable_super_admin, parent: :g5_authenticatable_user do
@@ -38,11 +36,19 @@ FactoryGirl.define do
     end
   end
 
+  factory :g5_authenticatable_viewer, parent: :g5_authenticatable_user do
+    after(:build) do |user|
+      user.roles.clear
+      user.roles << FactoryGirl.build(:g5_authenticatable_viewer_role)
+    end
+  end
+
   factory :g5_authenticatable_role, class: 'G5Authenticatable::Role' do
     sequence(:name) { |n| "role_#{n}" }
   end
 
-  factory :g5_authenticatable_super_admin_role, parent: :g5_authenticatable_role do
+  factory :g5_authenticatable_super_admin_role,
+          parent: :g5_authenticatable_role do
     name 'super_admin'
   end
 

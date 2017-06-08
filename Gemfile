@@ -18,20 +18,18 @@ group :test, :development do
   gem 'appraisal'
   gem 'dotenv-rails'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec-rails', '~> 3.6'
   gem 'web-console', '~> 2.0'
 end
 
 group :test do
   gem 'capybara'
-  gem 'codeclimate-test-reporter', require: false
-  gem 'factory_girl_rails', '~> 4.3', require: false
+  gem 'codeclimate-test-reporter'
   gem 'generator_spec'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-http', require: 'rspec/http'
   gem 'shoulda-matchers', '~> 2.6'
   gem 'simplecov', require: false
-  gem 'webmock'
 end
 
 # Declare any dependencies that are still in development here instead of in

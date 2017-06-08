@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'Default role-based authorization API' do
@@ -59,7 +61,7 @@ describe 'Default role-based authorization API' do
     end
 
     context 'when user is not a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
 
       it 'returns forbidden' do
         expect(response).to be_forbidden
@@ -71,7 +73,7 @@ describe 'Default role-based authorization API' do
     subject(:create_post) { post posts_path, post: post_params, format: :json }
 
     let(:post_params) do
-      {content: post_obj.content, author_id: post_obj.author.id}
+      { content: post_obj.content, author_id: post_obj.author.id }
     end
     let(:post_obj) { FactoryGirl.build(:post, author: user) }
 
@@ -80,7 +82,7 @@ describe 'Default role-based authorization API' do
 
       it 'returns ok' do
         create_post
-        expect(response).to be_created
+        expect(response).to be_http_created
       end
 
       it 'creates a post' do
@@ -106,7 +108,7 @@ describe 'Default role-based authorization API' do
     end
 
     let(:post_params) do
-      {content: 'some brand new content', author_id: post.author.id}
+      { content: 'some brand new content', author_id: post.author.id }
     end
     let(:post) { FactoryGirl.create(:post, author: user) }
 

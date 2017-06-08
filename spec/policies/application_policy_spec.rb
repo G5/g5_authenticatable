@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe ApplicationPolicy do
@@ -15,24 +17,18 @@ describe ApplicationPolicy do
       let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
 
       context 'when record exists in scope' do
-        it 'permits access' do
-          expect(policy).to permit(user, record)
-        end
+        it { is_expected.to permit(user, record) }
       end
 
       context 'when record does not exist in scope' do
         let(:record) { FactoryGirl.build(:post) }
 
-        it 'denies access' do
-          expect(policy).to_not permit(user, record)
-        end
+        it { is_expected.to_not permit(user, record) }
       end
     end
 
     context 'when user is not a super_admin' do
-      it 'denies access' do
-        expect(policy).to_not permit(user, record)
-      end
+      it { is_expected.to_not permit(user, record) }
     end
   end
 
@@ -71,23 +67,17 @@ describe ApplicationPolicy do
     context 'when there is no user' do
       let(:user) {}
 
-      it 'is false' do
-        expect(super_admin?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user does not have super_admin role' do
-      it 'is false' do
-        expect(super_admin?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user has the super_admin role' do
       let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
 
-      it 'is true' do
-        expect(super_admin?).to eq(true)
-      end
+      it { is_expected.to eq(true) }
     end
   end
 
@@ -97,23 +87,17 @@ describe ApplicationPolicy do
     context 'when there is no user' do
       let(:user) {}
 
-      it 'is false' do
-        expect(admin?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user does not have admin role' do
-      it 'is false' do
-        expect(admin?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user has the admin role' do
       let(:user) { FactoryGirl.create(:g5_authenticatable_admin) }
 
-      it 'is true' do
-        expect(admin?).to eq(true)
-      end
+      it { is_expected.to eq(true) }
     end
   end
 
@@ -123,23 +107,17 @@ describe ApplicationPolicy do
     context 'when there is no user' do
       let(:user) {}
 
-      it 'is false' do
-        expect(editor?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user does not have editor role' do
-      it 'is false' do
-        expect(editor?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user has the editor role' do
       let(:user) { FactoryGirl.create(:g5_authenticatable_editor) }
 
-      it 'is true' do
-        expect(editor?).to eq(true)
-      end
+      it { is_expected.to eq(true) }
     end
   end
 
@@ -149,23 +127,78 @@ describe ApplicationPolicy do
     context 'when there is no user' do
       let(:user) {}
 
-      it 'is false' do
-        expect(viewer?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user does not have viewer role' do
       let(:user) { FactoryGirl.create(:g5_authenticatable_editor) }
 
-      it 'is false' do
-        expect(viewer?).to eq(false)
-      end
+      it { is_expected.to eq(false) }
     end
 
     context 'when user has the viewer role' do
-      it 'is true' do
-        expect(viewer?).to eq(true)
-      end
+      let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
+
+      it { is_expected.to eq(true) }
+    end
+  end
+
+  describe '#global_role?' do
+    subject(:global_role?) { policy.new(user, record).global_role? }
+
+    let(:scoped_role) do
+      FactoryGirl.create(:g5_authenticatable_role, name: role_name,
+                                                   resource: resource)
+    end
+    let(:resource) { FactoryGirl.create(:g5_updatable_client) }
+
+    context 'when there is no user' do
+      it { is_expected.to eq(false) }
+    end
+
+    context 'when the user is a global super admin' do
+      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'when the user is a global admin' do
+      let(:user) { FactoryGirl.create(:g5_authenticatable_admin) }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'when the user is a global editor' do
+      let(:user) { FactoryGirl.create(:g5_authenticatable_editor) }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'when the user is a global viewer' do
+      let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'when user is a scoped admin' do
+      let(:role_name) { :admin }
+      before { user.roles << scoped_role }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'when user is a scoped editor' do
+      let(:role_name) { :editor }
+      before { user.roles << scoped_role }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'when user is a scoped viewer' do
+      let(:role_name) { :viewer }
+      before { user.roles << scoped_role }
+
+      it { is_expected.to eq(false) }
     end
   end
 end

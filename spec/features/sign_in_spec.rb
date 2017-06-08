@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'Signing in' do
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+  let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
 
   context 'from a login link' do
     subject(:login) { click_link 'Login' }
@@ -10,7 +12,7 @@ describe 'Signing in' do
 
     context 'when user exists locally' do
       before do
-        OmniAuth.config.mock_auth[:g5] = OmniAuth::AuthHash.new({
+        OmniAuth.config.mock_auth[:g5] = OmniAuth::AuthHash.new(
           uid: user.uid,
           provider: user.provider,
           info: {
@@ -28,10 +30,10 @@ describe 'Signing in' do
           extra: {
             title: updated_title,
             organization_name: updated_organization_name,
-            roles: [{name: updated_role.name, type: 'GLOBAL', urn: nil}],
+            roles: [{ name: updated_role.name, type: 'GLOBAL', urn: nil }],
             raw_info: {}
           }
-        })
+        )
       end
 
       let(:updated_first_name) { "Updated #{user.first_name}" }
@@ -40,7 +42,9 @@ describe 'Signing in' do
       let(:updated_title) { "Updated #{user.title}" }
       let(:updated_organization_name) { "Updated #{user.organization_name}" }
       let(:updated_access_token) { "updated-#{user.g5_access_token}-123" }
-      let(:updated_role) { FactoryGirl.create(:g5_authenticatable_super_admin_role) }
+      let(:updated_role) do
+        FactoryGirl.create(:g5_authenticatable_super_admin_role)
+      end
 
       it 'should sign in the user successfully' do
         login
@@ -105,12 +109,14 @@ describe 'Signing in' do
 
     context 'when user does not exist locally' do
       before do
-        OmniAuth.config.mock_auth[:g5] = OmniAuth::AuthHash.new({
+        full_name = [user_attributes[:first_name],
+                     user_attributes[:last_name]].join(' ')
+        OmniAuth.config.mock_auth[:g5] = OmniAuth::AuthHash.new(
           uid: user_attributes[:uid],
           provider: user_attributes[:provider],
           info: {
             email: user_attributes[:email],
-            name: "#{user_attributes[:first_name]} #{user_attributes[:last_name]}",
+            name: full_name,
             first_name: user_attributes[:first_name],
             last_name: user_attributes[:last_name],
             phone: user_attributes[:phone_number]
@@ -123,14 +129,18 @@ describe 'Signing in' do
           extra: {
             title: user_attributes[:title],
             organization_name: user_attributes[:organization_name],
-            roles: [{name: role_attributes[:name], type: 'GLOBAL', urn: nil}],
+            roles: [{ name: role_attributes[:name], type: 'GLOBAL', urn: nil }],
             raw_info: {}
           }
-        })
+        )
       end
 
-      let(:user_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_user) }
-      let(:role_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_editor_role) }
+      let(:user_attributes) do
+        FactoryGirl.attributes_for(:g5_authenticatable_user)
+      end
+      let(:role_attributes) do
+        FactoryGirl.attributes_for(:g5_authenticatable_editor_role)
+      end
 
       it 'should sign in the user successfully' do
         login
