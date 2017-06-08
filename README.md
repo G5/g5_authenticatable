@@ -18,11 +18,11 @@ library in isolation.
 
 ## Current Version
 
-0.9.0
+1.0.0.pre.1
 
 ## Requirements
 
-* [rails](https://github.com/rails/rails) >= 3.2
+* [rails](https://github.com/rails/rails) >= 4.1
 
 ## Installation
 

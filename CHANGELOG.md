@@ -1,3 +1,17 @@
+## v1.0.0.pre.1 (TBD)
+
+* **Backwards incompatible changes**
+  * Dropped support for rails < 4.1
+  * The `:g5_authenticatable_user` factory no longer assigns a default role to
+  the user. If you specifically need a user with a global viewer role, use the
+  new `:g5_authenticatable_viewer` factory instead.
+* Bug fixes
+  * Fixed problem with route generation in devise failure app
+* Deprecations
+  * The `has_global_role?` method on `G5Authenticatable::BasePolicy` and
+  `G5Authenticatable::BasePolicy::BaseScope` has been deprecated in favor of
+  `global_role?`
+
 ## v0.9.0 (2016-11-03)
 
 * Refactor custom mapping logic into devise_g5_authenticatable callbacks
