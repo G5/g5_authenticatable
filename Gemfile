@@ -12,7 +12,7 @@ gem 'active_model_serializers', '<= 0.10.0' # For compatibility with ruby 2.0.0
 gem 'grape'
 gem 'jquery-rails'
 gem 'pg'
-gem 'rails', '4.2.8'
+gem 'rails', '5.0.3'
 
 group :test, :development do
   gem 'appraisal'
@@ -27,7 +27,6 @@ group :test do
   gem 'codeclimate-test-reporter'
   gem 'generator_spec'
   gem 'rspec-activemodel-mocks'
-  gem 'rspec-http', require: 'rspec/http'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'simplecov', require: false
 end
@@ -38,3 +37,9 @@ end
 # your gem to rubygems.org.
 gem 'devise_g5_authenticatable', github: 'G5/devise_g5_authenticatable',
                                  branch: 'rails5'
+gem 'g5_authenticatable_api', github: 'G5/g5_authenticatable_api',
+                              branch: 'rails5'
+gem 'g5_authentication_client', github: 'G5/g5_authentication_client',
+                                branch: 'rails5'
+gem 'modelish', github: 'G5/modelish',
+                branch: 'dependency_upgrades'

@@ -82,7 +82,7 @@ describe 'Default role-based authorization API' do
 
       it 'returns ok' do
         create_post
-        expect(response).to be_http_created
+        expect(response.status).to eq(201)
       end
 
       it 'creates a post' do
@@ -117,7 +117,7 @@ describe 'Default role-based authorization API' do
 
       it 'returns ok' do
         update_post
-        expect(response).to be_http_no_content
+        expect(response.status).to eq(204)
       end
 
       it 'updates the post' do
@@ -149,7 +149,7 @@ describe 'Default role-based authorization API' do
 
       it 'returns ok' do
         delete_post
-        expect(response).to be_http_no_content
+        expect(response.status).to eq(204)
       end
 
       it 'deletes the post' do

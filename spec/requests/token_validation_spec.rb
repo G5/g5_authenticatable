@@ -36,7 +36,7 @@ describe 'API Token validation' do
 
       it 'should return a 401' do
         api_call
-        expect(response).to be_http_unauthorized
+        expect(response.status).to eq(401)
       end
     end
 

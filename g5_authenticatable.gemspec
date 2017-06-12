@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'devise_g5_authenticatable', '1.0.0.pre.1'
-  spec.add_dependency 'g5_authenticatable_api', '~> 0.4.1'
+  spec.add_dependency 'g5_authenticatable_api', '1.0.0.pre.1'
   spec.add_dependency 'rolify', '~> 4.0'
   spec.add_dependency 'pundit', '~> 1.0'
   spec.add_dependency 'g5_updatable', '> 0.6.0'

@@ -7,14 +7,14 @@ describe 'a secure Rails API' do
     context 'with an authenticated user', :auth_request do
       it 'should be successful' do
         api_call
-        expect(response).to be_http_ok
+        expect(response.status).to eq(200)
       end
     end
 
     context 'without an authenticated user' do
       it 'should be unauthorized' do
         api_call
-        expect(response).to be_http_unauthorized
+        expect(response.status).to eq(401)
       end
     end
   end
@@ -25,14 +25,14 @@ describe 'a secure Rails API' do
     context 'with an authenticated user', :auth_request do
       it 'should be successful' do
         api_call
-        expect(response).to be_http_ok
+        expect(response.status).to eq(200)
       end
     end
 
     context 'without an authenticated user' do
       it 'should be unauthorized' do
         api_call
-        expect(response).to be_http_unauthorized
+        expect(response.status).to eq(401)
       end
     end
   end
