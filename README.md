@@ -133,10 +133,10 @@ G5Authenticatable.strict_token_validation = true
 ### Controller filters and helpers
 
 G5 Authenticatable installs all of the usual devise controllers and helpers.
-To set up a controller that requires authentication, use this before_filter:
+To set up a controller that requires authentication, use this before_action:
 
 ```ruby
-before_filter :authenticate_user!
+before_action :authenticate_user!
 ```
 
 To verify if a user is signed in, use the following helper:
@@ -233,7 +233,7 @@ method:
 class MyResourcesController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_api_user!
+  before_action :authenticate_api_user!
 
   def get
     @resource = MyResource.find(params[:id])
@@ -685,14 +685,14 @@ when reconfiguring a client application to use a different auth endpoint
 
 ### Protecting a particular Rails controller action
 
-You can use all of the usual options to `before_filter` for more fine-grained
+You can use all of the usual options to `before_action` for more fine-grained
 control over where authentication is required. For example, to require
 authentication only to edit a resource while leaving all other actions
 unsecured:
 
 ```ruby
 class MyResourcesController < ApplicationController
-  before_filter :authenticate_user!, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:edit, :update]
 
   # ...
 end
@@ -747,8 +747,8 @@ the request format:
 
 ```ruby
 class MyMixedUpController < ApplicationController
-  before_filter :authenticate_api_user!, unless: :is_navigational_format?
-  before_filter :authenticate_user!, if: :is_navigational_format?
+  before_action :authenticate_api_user!, unless: :is_navigational_format?
+  before_action :authenticate_user!, if: :is_navigational_format?
 
   respond_to :html, :json
 
@@ -768,8 +768,8 @@ a signup form, you can try something like this:
 
 ```ruby
 class MyMixedUpController < ApplicationController
-  before_filter :authenticate_api_user!, if: :is_api_request?
-  before_filter :authenticate_user!, unless: :is_api_request?
+  before_action :authenticate_api_user!, if: :is_api_request?
+  before_action :authenticate_user!, unless: :is_api_request?
 
   respond_to :html
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # Normally, we'd do this as a feature spec, but there's
@@ -6,11 +8,12 @@ require 'spec_helper'
 # comes closest, but not quite)
 describe 'Signing out' do
   let(:auth_sign_out_url) do
-    "#{ENV['G5_AUTH_ENDPOINT']}/users/sign_out?redirect_url=http%3A%2F%2Fwww.example.com%2F"
+    "#{ENV['G5_AUTH_ENDPOINT']}/users/sign_out" \
+      '?redirect_url=http%3A%2F%2Fwww.example.com%2F'
   end
 
   describe 'GET /g5_auth/users/sign_out' do
-    subject(:sign_out) { get '/g5_auth/users/sign_out' }
+    subject(:sign_out) { safe_get '/g5_auth/users/sign_out' }
 
     context 'when user is logged in', :auth_request do
       it 'should redirect to the auth server' do
@@ -19,7 +22,8 @@ describe 'Signing out' do
 
       it 'should not allow the user to access protected pages' do
         sign_out
-        expect(get '/protected_page').to redirect_to('/g5_auth/users/sign_in')
+        expect(safe_get('/protected_page'))
+          .to redirect_to('/g5_auth/users/sign_in')
       end
     end
 
@@ -31,7 +35,7 @@ describe 'Signing out' do
   end
 
   describe 'DELETE /g5_auth/users/sign_out', :auth_request do
-    subject(:sign_out) { delete '/g5_auth/users/sign_out' }
+    subject(:sign_out) { safe_delete '/g5_auth/users/sign_out' }
 
     it 'should redirect to GET' do
       expect(sign_out).to redirect_to('/g5_auth/users/sign_out')

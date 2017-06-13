@@ -6,7 +6,7 @@ describe 'Default role-based authorization API' do
   let(:json) { JSON.parse(response.body) }
 
   describe 'GET /posts', :auth_request do
-    subject(:get_posts) { get posts_path, format: :json }
+    subject(:get_posts) { safe_get posts_path, format: :json }
 
     let!(:post) { FactoryGirl.create(:post, author: user) }
     let!(:other_post) { FactoryGirl.create(:post) }
@@ -40,7 +40,7 @@ describe 'Default role-based authorization API' do
   end
 
   describe 'GET /posts/:id', :auth_request do
-    subject(:show_post) { get post_path(post.id), format: :json }
+    subject(:show_post) { safe_get post_path(post.id), format: :json }
 
     let(:post) { FactoryGirl.create(:post, author: user) }
 
@@ -70,7 +70,9 @@ describe 'Default role-based authorization API' do
   end
 
   describe 'POST /posts', :auth_request do
-    subject(:create_post) { post posts_path, post: post_params, format: :json }
+    subject(:create_post) do
+      safe_post posts_path, post: post_params, format: :json
+    end
 
     let(:post_params) do
       { content: post_obj.content, author_id: post_obj.author.id }
@@ -104,7 +106,7 @@ describe 'Default role-based authorization API' do
 
   describe 'PUT /posts/:id', :auth_request do
     subject(:update_post) do
-      put post_path(post.id), post: post_params, format: :json
+      safe_put post_path(post.id), post: post_params, format: :json
     end
 
     let(:post_params) do
@@ -139,7 +141,7 @@ describe 'Default role-based authorization API' do
 
   describe 'DELETE /posts/:id', :auth_request do
     subject(:delete_post) do
-      delete post_path(post.id), format: :json
+      safe_delete post_path(post.id), format: :json
     end
 
     let!(:post) { FactoryGirl.create(:post, author: user) }

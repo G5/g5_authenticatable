@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'API Token validation' do
-  let(:token_info_url) { URI.join(ENV['G5_AUTH_ENDPOINT'], '/oauth/token/info') }
+  let(:token_info_url) do
+    URI.join(ENV['G5_AUTH_ENDPOINT'], '/oauth/token/info')
+  end
 
-  subject(:api_call) { get '/rails_api/secure_resource.json' }
+  subject(:api_call) { safe_get '/rails_api/secure_resource.json' }
 
   context 'when token validation is enabled' do
     before { G5Authenticatable.strict_token_validation = true }

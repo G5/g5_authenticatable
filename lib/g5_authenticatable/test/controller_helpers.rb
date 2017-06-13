@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 module G5Authenticatable
   module Test
+    # Helper methods for controller tests
     module ControllerHelpers
       def login_user(user)
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         sign_in user
       end
 
@@ -49,10 +52,10 @@ end
 
 shared_examples 'a secure controller' do
   controller do
-    before_filter :authenticate_user!
+    before_action :authenticate_user!
 
     def index
-      render text: 'content'
+      render plain: 'content'
     end
   end
 
@@ -72,6 +75,6 @@ shared_examples 'a secure controller' do
 end
 
 RSpec.configure do |config|
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include G5Authenticatable::Test::ControllerHelpers, type: :controller
 end
