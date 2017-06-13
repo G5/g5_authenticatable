@@ -41,7 +41,5 @@ gem 'g5_authenticatable_api', github: 'G5/g5_authenticatable_api',
                               branch: 'rails5'
 gem 'g5_authentication_client', github: 'G5/g5_authentication_client',
                                 branch: 'rails5'
-gem 'g5_updatable', git: 'git@github.com:g5search/g5_updatable.git',
-                    branch: 'rails5-compatible'
 gem 'modelish', github: 'G5/modelish',
                 branch: 'dependency_upgrades'
