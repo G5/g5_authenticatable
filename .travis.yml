@@ -8,6 +8,8 @@ gemfile:
   - gemfiles/rails_5.1.gemfile
 dist: trusty
 sudo: false
+cache:
+  bundler: true
 before_install:
   - gem install bundler
 before_script:
