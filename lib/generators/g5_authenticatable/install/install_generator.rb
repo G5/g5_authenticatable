@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class G5Authenticatable::InstallGenerator < Rails::Generators::Base
   include Rails::Generators::Migration
 
@@ -45,7 +47,15 @@ class G5Authenticatable::InstallGenerator < Rails::Generators::Base
   end
 
   private
+
   def copy_migration(name)
-    migration_template "migrate/#{name}.rb", "db/migrate/#{name}.rb"
+    migration_template("migrate/#{name}.rb",
+                       "db/migrate/#{name}.rb",
+                       migration_version: migration_version)
+  end
+
+  def migration_version
+    return unless Rails.version.starts_with?('5')
+    "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
   end
 end

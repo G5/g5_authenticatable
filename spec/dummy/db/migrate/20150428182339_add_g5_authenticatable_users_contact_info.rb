@@ -1,4 +1,6 @@
-class AddG5AuthenticatableUsersContactInfo < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class AddG5AuthenticatableUsersContactInfo < ActiveRecord::Migration[4.2]
   def change
     change_table(:g5_authenticatable_users) do |t|
       t.string :first_name

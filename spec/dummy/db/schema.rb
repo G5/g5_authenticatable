@@ -15,17 +15,17 @@ ActiveRecord::Schema.define(version: 20170613201436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "g5_authenticatable_roles", force: :cascade do |t|
+  create_table "g5_authenticatable_roles", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.integer "resource_id"
     t.string "resource_type"
+    t.integer "resource_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["name", "resource_type", "resource_id"], name: "index_g5_authenticatable_roles_on_name_and_resource"
     t.index ["name"], name: "index_g5_authenticatable_roles_on_name"
   end
 
-  create_table "g5_authenticatable_users", force: :cascade do |t|
+  create_table "g5_authenticatable_users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "provider", default: "g5", null: false
     t.string "uid", null: false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20170613201436) do
     t.index ["user_id", "role_id"], name: "index_g5_authenticatable_users_roles_on_user_id_and_role_id"
   end
 
-  create_table "g5_updatable_clients", force: :cascade do |t|
+  create_table "g5_updatable_clients", id: :serial, force: :cascade do |t|
     t.string "uid"
     t.string "urn"
     t.json "properties"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20170613201436) do
     t.index ["g5_updatable_location_id"], name: "updatable_amenities_loc_loc_id"
   end
 
-  create_table "g5_updatable_locations", force: :cascade do |t|
+  create_table "g5_updatable_locations", id: :serial, force: :cascade do |t|
     t.string "uid"
     t.string "urn"
     t.string "client_uid"
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 20170613201436) do
     t.index ["g5_updatable_location_id"], name: "index_g5_updatable_poi_location_id"
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "posts", id: :serial, force: :cascade do |t|
     t.integer "author_id"
     t.string "content"
     t.datetime "created_at", null: false

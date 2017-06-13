@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # For some reason, trying to load the generator from this spec
@@ -16,40 +18,83 @@ describe G5Authenticatable::InstallGenerator, type: :generator do
     run_generator
   end
 
-  it 'should copy the create user migration' do
-    expect(destination_root).to have_structure {
-      directory 'db' do
-        directory 'migrate' do
-          migration 'create_g5_authenticatable_users' do
-            contains 'class CreateG5AuthenticatableUsers < ActiveRecord::Migration'
+  context 'under rails 4.x', skip: !Rails.version.starts_with?('4') do
+    it 'should copy the unversioned create user migration' do
+      expect(destination_root).to have_structure {
+        directory 'db' do
+          directory 'migrate' do
+            migration 'create_g5_authenticatable_users' do
+              contains "class CreateG5AuthenticatableUsers < ActiveRecord::Migration\n"
+            end
           end
         end
-      end
-    }
+      }
+    end
+
+    it 'should copy the unversioned migration to add user contact info' do
+      expect(destination_root).to have_structure {
+        directory 'db' do
+          directory 'migrate' do
+            migration 'add_g5_authenticatable_users_contact_info' do
+              contains "class AddG5AuthenticatableUsersContactInfo < ActiveRecord::Migration\n"
+            end
+          end
+        end
+      }
+    end
+
+    it 'should copy the unversioned migration to add user roles' do
+      expect(destination_root).to have_structure {
+        directory 'db' do
+          directory 'migrate' do
+            migration 'create_g5_authenticatable_roles' do
+              contains "class CreateG5AuthenticatableRoles < ActiveRecord::Migration\n"
+            end
+          end
+        end
+      }
+    end
   end
 
-  it 'should copy the migration to add user contact info' do
-    expect(destination_root).to have_structure {
-      directory 'db' do
-        directory 'migrate' do
-          migration 'add_g5_authenticatable_users_contact_info' do
-            contains 'class AddG5AuthenticatableUsersContactInfo < ActiveRecord::Migration'
+  context 'under rails 5.x', skip: !Rails.version.starts_with?('5') do
+    it 'should copy the versioned create user migration' do
+      expect(destination_root).to have_structure {
+        directory 'db' do
+          directory 'migrate' do
+            migration 'create_g5_authenticatable_users' do
+              migration_version = "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
+              contains "class CreateG5AuthenticatableUsers < ActiveRecord::Migration#{migration_version}\n"
+            end
           end
         end
-      end
-    }
-  end
+      }
+    end
 
-  it 'should copy the migration to add user roles' do
-    expect(destination_root).to have_structure {
-      directory 'db' do
-        directory 'migrate' do
-          migration 'create_g5_authenticatable_roles' do
-            contains 'class CreateG5AuthenticatableRoles < ActiveRecord::Migration'
+    it 'should copy the unversioned migration to add user contact info' do
+      expect(destination_root).to have_structure {
+        directory 'db' do
+          directory 'migrate' do
+            migration 'add_g5_authenticatable_users_contact_info' do
+              migration_version = "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
+              contains "class AddG5AuthenticatableUsersContactInfo < ActiveRecord::Migration#{migration_version}\n"
+            end
           end
         end
-      end
-    }
+      }
+    end
+
+    it 'should copy the unversioned migration to add user roles' do
+      expect(destination_root).to have_structure {
+        directory 'db' do
+          directory 'migrate' do
+            migration 'create_g5_authenticatable_roles' do
+              migration_version = "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
+              contains "class CreateG5AuthenticatableRoles < ActiveRecord::Migration#{migration_version}\n"
+            end
+          end
+        end
+      }
+    end
   end
 
   it 'should copy the initializer' do
