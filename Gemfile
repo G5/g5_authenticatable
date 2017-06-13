@@ -12,7 +12,7 @@ gem 'active_model_serializers', '<= 0.10.0' # For compatibility with ruby 2.0.0
 gem 'grape'
 gem 'jquery-rails'
 gem 'pg'
-gem 'rails', '5.0.3'
+gem 'rails', '~> 5.1.1'
 
 group :test, :development do
   gem 'appraisal'
