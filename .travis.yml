@@ -1,11 +1,19 @@
 language: ruby
 rvm:
+  - 2.2.7
   - 2.3.4
+  - 2.4.1
 gemfile:
   - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_4.2.gemfile
   - gemfiles/rails_5.0.gemfile
   - gemfiles/rails_5.1.gemfile
+matrix:
+  exclude:
+    - rvm: 2.4.1
+      gemfile: gemfiles/rails_4.1.gemfile
+  allow_failures:
+    - rvm: 2.4.1
 dist: trusty
 sudo: false
 cache:
