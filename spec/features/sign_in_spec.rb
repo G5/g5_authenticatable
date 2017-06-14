@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Signing in' do
+RSpec.describe 'Signing in' do
   let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
 
   context 'from a login link' do

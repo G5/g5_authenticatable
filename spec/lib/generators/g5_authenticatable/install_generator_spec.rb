@@ -8,7 +8,7 @@ require 'spec_helper'
 # when you execute it from the command line
 require 'generators/g5_authenticatable/install/install_generator'
 
-describe G5Authenticatable::InstallGenerator, type: :generator do
+RSpec.describe G5Authenticatable::InstallGenerator, type: :generator do
   destination File.expand_path('../../../../tmp', __FILE__)
 
   before do

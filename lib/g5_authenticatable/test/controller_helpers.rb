@@ -16,12 +16,12 @@ module G5Authenticatable
   end
 end
 
-shared_context 'auth controller', auth_controller: true do
+RSpec.shared_context 'auth controller', auth_controller: true do
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
   include_context 'authorization controller'
 end
 
-shared_context 'super admin auth controller' do
+RSpec.shared_context 'super admin auth controller' do
   let(:user) do
     user = FactoryGirl.create(:g5_authenticatable_user)
     user.add_role(:super_admin)
@@ -30,7 +30,7 @@ shared_context 'super admin auth controller' do
   include_context 'authorization controller'
 end
 
-shared_context 'admin auth controller' do
+RSpec.shared_context 'admin auth controller' do
   let(:user) do
     user = FactoryGirl.create(:g5_authenticatable_user)
     user.add_role(:admin)
@@ -39,7 +39,7 @@ shared_context 'admin auth controller' do
   include_context 'authorization controller'
 end
 
-shared_context 'authorization controller' do
+RSpec.shared_context 'authorization controller' do
   include G5Authenticatable::Test::ControllerHelpers
 
   before do
@@ -50,7 +50,7 @@ shared_context 'authorization controller' do
   after { logout_user(user) }
 end
 
-shared_examples 'a secure controller' do
+RSpec.shared_examples 'a secure controller' do
   controller do
     before_action :authenticate_user!
 

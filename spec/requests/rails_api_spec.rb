@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'a secure Rails API' do
+RSpec.describe 'a secure Rails API' do
   describe 'POST request to an API-only action' do
     subject(:api_call) { safe_post '/rails_api/secure_resource' }
 

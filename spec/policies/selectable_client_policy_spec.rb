@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe G5Updatable::SelectableClientPolicy do
+RSpec.describe G5Updatable::SelectableClientPolicy do
   subject(:policy) { described_class }
 
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ApplicationPolicy do
+RSpec.describe ApplicationPolicy do
   subject(:policy) { described_class }
 
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Default role-based authorization API' do
+RSpec.describe 'Default role-based authorization API' do
   let(:json) { JSON.parse(response.body) }
 
   describe 'GET /posts', :auth_request do

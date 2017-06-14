@@ -6,7 +6,7 @@ require 'spec_helper'
 # currently no easy way to get capybara to play along nicely
 # with mocks for external redirects (the capybara-mechanize driver
 # comes closest, but not quite)
-describe 'Signing out' do
+RSpec.describe 'Signing out' do
   let(:auth_sign_out_url) do
     "#{ENV['G5_AUTH_ENDPOINT']}/users/sign_out" \
       '?redirect_url=http%3A%2F%2Fwww.example.com%2F'

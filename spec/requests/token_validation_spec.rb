@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'API Token validation' do
+RSpec.describe 'API Token validation' do
   let(:token_info_url) do
     URI.join(ENV['G5_AUTH_ENDPOINT'], '/oauth/token/info')
   end

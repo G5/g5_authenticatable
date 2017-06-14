@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe G5Authenticatable::Role do
+RSpec.describe G5Authenticatable::Role do
   subject { role }
   let(:role) { G5Authenticatable::Role.new(role_attributes) }
   let(:role_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_role) }

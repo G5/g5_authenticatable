@@ -36,7 +36,7 @@ module G5Authenticatable
   end
 end
 
-shared_context 'auth', auth: true do
+RSpec.shared_context 'auth', auth: true do
   include G5Authenticatable::Test::FeatureHelpers
 
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }

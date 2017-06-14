@@ -56,6 +56,8 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.after(:suite) { WebMock.disable! }
+
+  config.disable_monkey_patching!
 end
 
 Shoulda::Matchers.configure do |config|

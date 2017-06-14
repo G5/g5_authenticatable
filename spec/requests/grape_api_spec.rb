@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'a secure Grape API' do
+RSpec.describe 'a secure Grape API' do
   subject(:api_call) { safe_get '/api/secure_resource' }
 
   context 'with an authenticated user', :auth_request do

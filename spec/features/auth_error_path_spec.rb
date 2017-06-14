@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-describe 'error path' do
-
+RSpec.describe 'error path' do
   context 'when there is an error at the oauth server' do
-
     before do
       stub_g5_invalid_credentials
     end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-describe 'g5_authenticatable:purge_users' do
+RSpec.describe 'g5_authenticatable:purge_users' do
   include_context 'rake'
 
   context 'when there are no local users' do

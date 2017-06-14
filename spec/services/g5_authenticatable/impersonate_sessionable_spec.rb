@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-describe G5Authenticatable::ImpersonateSessionable do
+RSpec.describe G5Authenticatable::ImpersonateSessionable do
   let!(:user) { FactoryGirl.create(:g5_authenticatable_user) }
 
   class MyImpersponateSessionableTest
@@ -16,31 +18,37 @@ describe G5Authenticatable::ImpersonateSessionable do
       expect(service_instance).to receive(:impersonation_user).and_return(user)
     end
 
-    it { expect(impersonation_user).to be_truthy }
+    it { is_expected.to be_truthy }
   end
 
   describe '#impersonation_user' do
     subject(:impersonation_user) { service_instance.send(:impersonation_user) }
 
     before do
-      expect(service_instance).to receive(:impersonate_admin_uid).and_return(user.uid)
+      expect(service_instance).to receive(:impersonate_admin_uid)
+        .and_return(user.uid)
     end
 
-    it { expect(impersonation_user).to eq(user) }
+    it { is_expected.to eq(user) }
   end
 
   describe '#user_to_impersonate' do
-    subject(:user_to_impersonate) { service_instance.send(:user_to_impersonate) }
-
-    before do
-      expect(service_instance).to receive(:impersonating_user_uid).and_return(user.uid)
+    subject(:user_to_impersonate) do
+      service_instance.send(:user_to_impersonate)
     end
 
-    it { expect(user_to_impersonate).to eq(user) }
+    before do
+      expect(service_instance).to receive(:impersonating_user_uid)
+        .and_return(user.uid)
+    end
+
+    it { is_expected.to eq(user) }
   end
 
   describe '#able_to_impersonate?' do
-    subject(:able_to_impersonate) { service_instance.send(:able_to_impersonate?, user, user2) }
+    subject(:able_to_impersonate) do
+      service_instance.send(:able_to_impersonate?, user, user2)
+    end
 
     context 'having a super admin and any other user' do
       let!(:user) do
@@ -50,7 +58,7 @@ describe G5Authenticatable::ImpersonateSessionable do
       end
       let!(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
 
-      it { expect(able_to_impersonate).to eq(true) }
+      it { is_expected.to eq(true) }
     end
 
     context 'having an admin' do
@@ -67,7 +75,7 @@ describe G5Authenticatable::ImpersonateSessionable do
           user
         end
 
-        it { expect(able_to_impersonate).to eq(false) }
+        it { is_expected.to eq(false) }
       end
 
       context 'assuming another admin' do
@@ -77,22 +85,37 @@ describe G5Authenticatable::ImpersonateSessionable do
           user
         end
 
-        it { expect(able_to_impersonate).to eq(true) }
+        it { is_expected.to eq(true) }
       end
 
       context 'assuming a regular user' do
         let!(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
 
-        it { expect(able_to_impersonate).to eq(true) }
+        it { is_expected.to eq(true) }
       end
     end
 
     context 'providing no user' do
-      it { expect(service_instance.send(:able_to_impersonate?, user, nil)).to eq(false) }
+      context 'when user to impersonate is nil' do
+        let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+        let(:user2) {}
 
-      it { expect(service_instance.send(:able_to_impersonate?, nil, user)).to eq(false) }
+        it { is_expected.to eq(false) }
+      end
 
-      it { expect(service_instance.send(:able_to_impersonate?, nil, nil)).to eq(false) }
+      context 'when signed-in user is nil' do
+        let(:user) {}
+        let(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
+
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when both users are nil' do
+        let(:user) {}
+        let(:user2) {}
+
+        it { is_expected.to eq(false) }
+      end
     end
   end
 
@@ -101,12 +124,12 @@ describe G5Authenticatable::ImpersonateSessionable do
 
     context 'having an existing uid' do
       let(:uid) { user.uid }
-      it { expect(user_by_uid).to eq(user) }
+      it { is_expected.to eq(user) }
     end
 
     context 'having a no existing uid' do
       let(:uid) { 'some-random-text' }
-      it { expect(user_by_uid).to be_nil }
+      it { is_expected.to be_nil }
     end
   end
 end

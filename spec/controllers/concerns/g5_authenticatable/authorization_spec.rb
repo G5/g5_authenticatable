@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe G5Authenticatable::Authorization, type: :controller do
+RSpec.describe G5Authenticatable::Authorization, type: :controller do
   controller(ActionController::Base) do
     include G5Authenticatable::Authorization
 
