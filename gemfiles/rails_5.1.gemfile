@@ -7,8 +7,6 @@ gem "grape"
 gem "jquery-rails"
 gem "pg"
 gem "rails", "~> 5.1.1"
-gem "devise_g5_authenticatable", github: "G5/devise_g5_authenticatable", branch: "rails5"
-gem "g5_authenticatable_api", github: "G5/g5_authenticatable_api", branch: "rails5"
 
 group :test, :development do
   gem "appraisal"
