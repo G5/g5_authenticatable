@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'devise/strategies/authenticatable'
 require 'devise/strategies/base'
 
@@ -6,10 +8,11 @@ module Devise
     class ImpersonateStrategy < Authenticatable
       include ::G5Authenticatable::ImpersonateSessionable
 
-      # Prevents unauthorized users to impersonate another user when visiting the correct URL
+      # Prevents unauthorized users to impersonate another user when visiting
+      # the correct URL
       def valid?
         allowed = user_to_impersonate.present? &&
-                    able_to_impersonate?(impersonation_user, user_to_impersonate)
+                  able_to_impersonate?(impersonation_user, user_to_impersonate)
         return allowed if allowed
         clear_impersonation_keys
         true

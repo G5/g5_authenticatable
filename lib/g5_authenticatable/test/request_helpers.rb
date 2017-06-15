@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module G5Authenticatable
   module Test
+    # Helper methods for login/logout during request specs
     module RequestHelpers
       include Warden::Test::Helpers
 

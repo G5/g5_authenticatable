@@ -1,12 +1,13 @@
-# Policy to define which clients are show to users to select. This includes all clients for whom a user only
-# has a location scoped role.  Clients defined by this policy are not necessarily granted view permissions at the client
-# level.
+# frozen_string_literal: true
+
+# Policy to define which clients are show to users to select. This includes all
+# clients for whom a user only has a location scoped role.  Clients defined by
+# this policy are not necessarily granted view permissions at the client level.
 module G5Updatable
   class SelectableClientPolicy < G5Authenticatable::BasePolicy
     class Scope < G5Authenticatable::BasePolicy::BaseScope
-
       def resolve
-        return clients_from_client_and_location_roles
+        clients_from_client_and_location_roles
       end
 
       def client_roles
@@ -31,8 +32,6 @@ module G5Updatable
                  G5Updatable::Location.name, user.id)
           .group('g5_updatable_clients.id')
       end
-
     end
-
   end
 end

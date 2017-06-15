@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Enable strict token validation to guarantee that an authenticated
 # user's access token is still valid on the global auth server, at the
 # cost of performance. When disabled, the user's access token will

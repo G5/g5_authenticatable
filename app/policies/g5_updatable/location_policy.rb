@@ -1,9 +1,11 @@
-# The policy will resolve to all locations that a user has access. This includes locations that a user has roles for
-# but also those locations for which a user has a client role.  Global roles grant access to ALL locations.
+# frozen_string_literal: true
+
+# The policy will resolve to all locations that a user has access. This includes
+# locations that a user has roles for but also those locations for which a user
+# has a client role.  Global roles grant access to ALL locations.
 module G5Updatable
   class LocationPolicy < G5Authenticatable::BasePolicy
     class Scope < G5Authenticatable::BasePolicy::BaseScope
-
       def resolve
         locations_from_client_location_roles
       end
@@ -27,14 +29,11 @@ module G5Updatable
           .where('r.resource_type=?', G5Updatable::Client.name)
       end
 
-
       def locations_from_client_location_roles
         return scope.all if has_global_role?
         location_ids = locations_from_client_roles.map(&:id) | location_roles.map(&:resource_id)
         G5Updatable::Location.where(id: location_ids)
       end
-
     end
-
   end
 end

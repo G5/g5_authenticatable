@@ -1,22 +1,35 @@
-class G5Authenticatable::FailureApp < Devise::FailureApp
-  def scope_url
-    opts  = {}
-    route = :"new_#{scope}_session_url"
-    opts[:format] = request_format unless skip_format?
+# frozen_string_literal: true
 
-    config = Rails.application.config
+module G5Authenticatable
+  # Custom failure app that generates urls correctly within an isolated engine
+  # https://github.com/plataformatec/devise/issues/4127
+  class FailureApp < Devise::FailureApp
+    def scope_url
+      opts  = {}
+      route = :"new_#{scope}_session_url"
+      opts[:format] = request_format unless skip_format?
 
-    # See https://github.com/G5/g5_authenticatable/issues/25
-    opts[:script_name] = config.relative_url_root if config.try(:relative_url_root)
+      config = Rails.application.config
 
-    context = send(Devise.available_router_name)
+      if config.try(:relative_url_root)
+        opts[:script_name] = config.relative_url_root
+      end
 
-    if context.respond_to?(route)
-      context.send(route, opts)
-    elsif respond_to?(:root_url)
-      root_url(opts)
-    else
-      "/"
+      failure_url(route, opts)
+    end
+
+    private
+
+    def failure_url(route, opts)
+      context = send(Devise.available_router_name)
+
+      if context.respond_to?(route)
+        context.send(route, opts)
+      elsif respond_to?(:root_url)
+        root_url(opts)
+      else
+        '/'
+      end
     end
   end
 end

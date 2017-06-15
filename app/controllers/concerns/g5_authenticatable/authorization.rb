@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module G5Authenticatable
+  # Authorization helpers and error handling for controllers
   module Authorization
     extend ActiveSupport::Concern
 
@@ -10,7 +13,7 @@ module G5Authenticatable
     def user_not_authorized
       respond_to do |format|
         format.json do
-          render status: :forbidden, json: {error: 'Access forbidden'}
+          render status: :forbidden, json: { error: 'Access forbidden' }
         end
         format.html do
           render status: :forbidden, file: "#{Rails.root}/public/403"
