@@ -16,7 +16,7 @@ module G5Authenticatable
   end
 end
 
-RSpec.shared_context 'auth controller', auth_controller: true do
+RSpec.shared_context 'auth controller' do
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
   include_context 'authorization controller'
 end
@@ -77,4 +77,6 @@ end
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include G5Authenticatable::Test::ControllerHelpers, type: :controller
+
+  config.include_context 'auth controller', auth_controller: true
 end

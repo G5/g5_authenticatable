@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe 'Application Configuration' do
   it 'appends access_token to the implementing apps filter_parameters' do

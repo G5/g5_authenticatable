@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe 'Default role-based authorization API' do
   let(:json) { JSON.parse(response.body) }

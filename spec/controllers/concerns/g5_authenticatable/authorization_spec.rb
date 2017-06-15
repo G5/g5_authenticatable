@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe G5Authenticatable::Authorization, type: :controller do
   controller(ActionController::Base) do

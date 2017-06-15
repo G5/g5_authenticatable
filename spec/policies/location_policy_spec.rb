@@ -1,4 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe G5Updatable::LocationPolicy do
   subject(:policy) { described_class }
@@ -9,11 +11,19 @@ RSpec.describe G5Updatable::LocationPolicy do
   let!(:client_1) { FactoryGirl.create(:g5_updatable_client) }
   let!(:client_2) { FactoryGirl.create(:g5_updatable_client) }
 
-  let!(:location_1) { FactoryGirl.create(:g5_updatable_location, client: client_1) }
-  let!(:location_2) { FactoryGirl.create(:g5_updatable_location, client: client_1) }
+  let!(:location_1) do
+    FactoryGirl.create(:g5_updatable_location, client: client_1)
+  end
+  let!(:location_2) do
+    FactoryGirl.create(:g5_updatable_location, client: client_1)
+  end
 
-  let!(:location_3) { FactoryGirl.create(:g5_updatable_location, client: client_2) }
-  let!(:location_4) { FactoryGirl.create(:g5_updatable_location, client: client_2) }
+  let!(:location_3) do
+    FactoryGirl.create(:g5_updatable_location, client: client_2)
+  end
+  let!(:location_4) do
+    FactoryGirl.create(:g5_updatable_location, client: client_2)
+  end
 
   before do
     user.roles = []
@@ -22,7 +32,10 @@ RSpec.describe G5Updatable::LocationPolicy do
   end
 
   describe '.resolve' do
-    subject { G5Updatable::LocationPolicy::Scope.new(user, G5Updatable::Location).resolve }
+    subject do
+      G5Updatable::LocationPolicy::Scope.new(user, G5Updatable::Location)
+                                        .resolve
+    end
 
     context 'with global role' do
       before { user.add_role :admin }
@@ -42,7 +55,7 @@ RSpec.describe G5Updatable::LocationPolicy do
       end
     end
 
-    context 'with many client roles'  do
+    context 'with many client roles' do
       before do
         user.add_role(:admin, location_1)
         user.add_role(:admin, location_2)

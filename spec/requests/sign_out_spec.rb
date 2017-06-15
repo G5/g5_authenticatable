@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 # Normally, we'd do this as a feature spec, but there's
 # currently no easy way to get capybara to play along nicely

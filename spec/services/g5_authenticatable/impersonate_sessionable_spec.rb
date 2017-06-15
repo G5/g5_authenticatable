@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe G5Authenticatable::ImpersonateSessionable do
   let!(:user) { FactoryGirl.create(:g5_authenticatable_user) }

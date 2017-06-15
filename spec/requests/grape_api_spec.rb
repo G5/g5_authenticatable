@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe 'a secure Grape API' do
   subject(:api_call) { safe_get '/api/secure_resource' }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 # For some reason, trying to load the generator from this spec
 # causes problems without an explicit require statement, even

@@ -49,7 +49,7 @@ module G5Authenticatable
   end
 end
 
-RSpec.shared_context 'auth', auth: true do
+RSpec.shared_context 'auth' do
   include G5Authenticatable::Test::FeatureHelpers
 
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
@@ -65,4 +65,5 @@ RSpec.configure do |config|
   config.after(:each) { OmniAuth.config.test_mode = false }
 
   config.include G5Authenticatable::Test::FeatureHelpers, type: :feature
+  config.include_context 'auth', auth: true
 end

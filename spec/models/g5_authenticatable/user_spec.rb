@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe G5Authenticatable::User do
   subject { user }
@@ -498,16 +498,8 @@ RSpec.describe G5Authenticatable::User do
     let(:user_attributes2) do
       FactoryGirl.attributes_for(:g5_authenticatable_user)
     end
-    let(:mock_urn) { 'mock_urn' }
 
-    let(:mock_resource_class) { Class.new }
-    before { stub_const('MockResource', mock_resource_class) }
-
-    let(:mock_resource) { stub_model(mock_resource_class, urn: mock_urn) }
-    before do
-      allow(mock_resource_class).to receive(:where)
-        .with(urn: mock_urn).and_return([mock_resource])
-    end
+    let!(:resource) { FactoryGirl.create(:g5_updatable_client) }
 
     let(:auth_data) do
       OmniAuth::AuthHash.new(
@@ -548,22 +540,22 @@ RSpec.describe G5Authenticatable::User do
 
     context 'with a scoped role' do
       let(:roles) do
-        [{ name: 'viewer', type: 'MockResource', urn: mock_urn }]
+        [{ name: 'viewer', type: resource.class.name, urn: resource.urn }]
       end
 
       it 'will add a scoped role' do
         expect { user.update_roles_from_auth(auth_data) }
           .to change { user.roles.length }.from(0).to(1)
         expect(user.roles.first.name).to eq('viewer')
-        expect(user.roles.first.resource_id).to eq(mock_resource.id)
-        expect(user.roles.first.resource_type).to eq('MockResource')
+        expect(user.roles.first.resource_id).to eq(resource.id)
+        expect(user.roles.first.resource_type).to eq(resource.class.name)
       end
     end
 
     context 'with a more than 1 role' do
       let(:roles) do
         [
-          { name: 'viewer', type: 'MockResource', urn: mock_urn },
+          { name: 'viewer', type: resource.class.name, urn: resource.urn },
           { name: 'admin', type: 'GLOBAL', urn: nil }
         ]
       end
@@ -576,13 +568,9 @@ RSpec.describe G5Authenticatable::User do
 
     context 'with an un-existing scoped role URL' do
       let(:non_existing_urn) { 'some-non-existing-urn' }
-      before do
-        allow(mock_resource_class).to receive(:where)
-          .with(urn: non_existing_urn).and_return([])
-      end
 
       let(:roles) do
-        [{ name: 'viewer', type: 'MockResource', urn: non_existing_urn }]
+        [{ name: 'viewer', type: 'G5Updatable::Client', urn: non_existing_urn }]
       end
 
       it 'will add a scoped role' do
@@ -603,8 +591,8 @@ RSpec.describe G5Authenticatable::User do
     context 'with a bad role type' do
       let(:roles) do
         [
-          { name: 'viewer', type: 'MockResource', urn: mock_urn },
-          { name: 'viewer', type: 'BadResource', urn: mock_urn }
+          { name: 'viewer', type: resource.class.name, urn: resource.urn },
+          { name: 'viewer', type: 'BadResource', urn: resource.urn }
         ]
       end
 
@@ -612,8 +600,8 @@ RSpec.describe G5Authenticatable::User do
         expect { user.update_roles_from_auth(auth_data) }
           .to change { user.roles.length }.from(0).to(1)
         expect(user.roles.first.name).to eq('viewer')
-        expect(user.roles.first.resource_id).to eq(mock_resource.id)
-        expect(user.roles.first.resource_type).to eq('MockResource')
+        expect(user.roles.first.resource_id).to eq(resource.id)
+        expect(user.roles.first.resource_type).to eq(resource.class.name)
       end
     end
   end
