@@ -68,7 +68,7 @@ Devise requires you to define a root route in your application's
 `config/routes.rb`. For example:
 
 ```ruby
-root :to => 'home#index'
+root to: 'home#index'
 ```
 
 ### Registering your OAuth application
@@ -457,7 +457,8 @@ your javascript driver instead.
 #### Installation ####
 
 To automatically mix in helpers to your feature and request specs, include the
-following line in your `spec/spec_helper.rb`:
+following line in your `spec/rails_helper.rb`, after your app and rspec-rails
+have been loaded:
 
 ```ruby
 require 'g5_authenticatable/rspec'
