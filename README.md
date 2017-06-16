@@ -157,6 +157,32 @@ To access scoped session storage:
 user_session
 ```
 
+### Securing an engine (e.g. sidekiq or resque web UI)
+
+To use G5 Auth to secure another Rails engine mounted within your application,
+modify your `config/routes.rb` file like so:
+
+```ruby
+# To allow any authenticated user to access the mounted engine
+authenticate :user do
+  mount Sidekiq::Web => '/sidekiq'
+end
+
+# To restrict access to a particular user role
+authenticate :user, ->(user) { user.has_role?(:super_admin) } do
+  mount Sidekiq::Web => '/sidekiq'
+end
+```
+
+Note that some additional configuration may be necessary, depending on the
+engine which you are securing. For instance, sidekiq web tries to manage its
+own independent session store, which must be disabled by adding this line to
+your `config/initializers/sidekiq.rb` file:
+
+```ruby
+Sidekiq::Web.set(:sessions, false)
+```
+
 ### Route helpers
 
 There are several generic helper methods for session and omniauth
