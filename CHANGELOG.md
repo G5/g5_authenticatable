@@ -1,3 +1,8 @@
+## v0.9.1.pre.1 (2017-07-25)
+
+* Extend session timeout to 12 hours
+  ([#51](https://github.com/G5/g5_authenticatable/pull/51))
+
 ## v0.9.0 (2016-11-03)
 
 * Refactor custom mapping logic into devise_g5_authenticatable callbacks
