@@ -1,4 +1,8 @@
-## v1.0.0.pre.1 (TBD)
+## v1.0.0.pre.2 (2017-07-25)
+
+* Extend session timeout to 12 hours for client applications
+
+## v1.0.0.pre.1 (2017-07-13)
 
 * **Backwards incompatible changes**
   * Dropped support for rails < 4.1
