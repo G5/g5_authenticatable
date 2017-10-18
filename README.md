@@ -622,14 +622,14 @@ Rspec metadata:
 
 ```ruby
 describe 'my secure action' do
-  context 'when the user is authenticated' do
+  context 'when the user is authenticated', :auth_controller do
     it 'can access some secure path' do
       get :my_action
       expect(response). to be_success
     end
   end
 
-  context 'when there is no authenticated user', :auth_controller do
+  context 'when there is no authenticated user' do
     it 'cannot access the secure path' do
       get :my_action
       expect(reponse).to be_redirect
