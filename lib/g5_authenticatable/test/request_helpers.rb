@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module G5Authenticatable
   module Test
+    # Helper methods for login/logout during request specs
     module RequestHelpers
       include Warden::Test::Helpers
 
@@ -14,7 +17,7 @@ module G5Authenticatable
   end
 end
 
-shared_context 'auth request', auth_request: true do
+RSpec.shared_context 'auth request' do
   include G5Authenticatable::Test::RequestHelpers
 
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
@@ -30,4 +33,5 @@ end
 RSpec.configure do |config|
   config.include G5Authenticatable::Test::RequestHelpers, type: :request
   config.after { Warden.test_reset! }
+  config.include_context 'auth request', auth_request: true
 end

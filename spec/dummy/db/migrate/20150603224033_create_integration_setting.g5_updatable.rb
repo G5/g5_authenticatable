@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 # This migration comes from g5_updatable (originally 20141030211945)
-class CreateIntegrationSetting < ActiveRecord::Migration
+class CreateIntegrationSetting < ActiveRecord::Migration[4.2]
   def change
     create_table :g5_updatable_integration_settings do |t|
       t.string :uid

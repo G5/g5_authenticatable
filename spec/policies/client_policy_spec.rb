@@ -1,6 +1,8 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe G5Updatable::ClientPolicy do
+require 'rails_helper'
+
+RSpec.describe G5Updatable::ClientPolicy do
   subject(:policy) { described_class }
 
   let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
@@ -17,8 +19,9 @@ describe G5Updatable::ClientPolicy do
   let!(:client_3) { FactoryGirl.create(:g5_updatable_client) }
 
   describe '.resolve' do
-
-    subject { G5Updatable::ClientPolicy::Scope.new(user, G5Updatable::Client).resolve }
+    subject do
+      G5Updatable::ClientPolicy::Scope.new(user, G5Updatable::Client).resolve
+    end
 
     context 'with global role' do
       before { user.add_role :admin }
@@ -38,7 +41,7 @@ describe G5Updatable::ClientPolicy do
       end
     end
 
-    context 'with many client roles'  do
+    context 'with many client roles' do
       before do
         user.add_role(:admin, client_1)
         user.add_role(:admin, client_2)

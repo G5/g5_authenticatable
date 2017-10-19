@@ -18,11 +18,11 @@ library in isolation.
 
 ## Current Version
 
-0.9.0
+1.0.0
 
 ## Requirements
 
-* [rails](https://github.com/rails/rails) >= 3.2
+* [rails](https://github.com/rails/rails) >= 4.1
 
 ## Installation
 
@@ -68,7 +68,7 @@ Devise requires you to define a root route in your application's
 `config/routes.rb`. For example:
 
 ```ruby
-root :to => 'home#index'
+root to: 'home#index'
 ```
 
 ### Registering your OAuth application
@@ -133,10 +133,10 @@ G5Authenticatable.strict_token_validation = true
 ### Controller filters and helpers
 
 G5 Authenticatable installs all of the usual devise controllers and helpers.
-To set up a controller that requires authentication, use this before_filter:
+To set up a controller that requires authentication, use this before_action:
 
 ```ruby
-before_filter :authenticate_user!
+before_action :authenticate_user!
 ```
 
 To verify if a user is signed in, use the following helper:
@@ -155,6 +155,32 @@ To access scoped session storage:
 
 ```ruby
 user_session
+```
+
+### Securing an engine (e.g. sidekiq or resque web UI)
+
+To use G5 Auth to secure another Rails engine mounted within your application,
+modify your `config/routes.rb` file like so:
+
+```ruby
+# To allow any authenticated user to access the mounted engine
+authenticate :user do
+  mount Sidekiq::Web => '/sidekiq'
+end
+
+# To restrict access to a particular user role
+authenticate :user, ->(user) { user.has_role?(:super_admin) } do
+  mount Sidekiq::Web => '/sidekiq'
+end
+```
+
+Note that some additional configuration may be necessary, depending on the
+engine which you are securing. For instance, sidekiq web tries to manage its
+own independent session store, which must be disabled by adding this line to
+your `config/initializers/sidekiq.rb` file:
+
+```ruby
+Sidekiq::Web.set(:sessions, false)
 ```
 
 ### Route helpers
@@ -233,7 +259,7 @@ method:
 class MyResourcesController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_api_user!
+  before_action :authenticate_api_user!
 
   def get
     @resource = MyResource.find(params[:id])
@@ -457,7 +483,8 @@ your javascript driver instead.
 #### Installation ####
 
 To automatically mix in helpers to your feature and request specs, include the
-following line in your `spec/spec_helper.rb`:
+following line in your `spec/rails_helper.rb`, after your app and rspec-rails
+have been loaded:
 
 ```ruby
 require 'g5_authenticatable/rspec'
@@ -595,14 +622,14 @@ Rspec metadata:
 
 ```ruby
 describe 'my secure action' do
-  context 'when the user is authenticated' do
+  context 'when the user is authenticated', :auth_controller do
     it 'can access some secure path' do
       get :my_action
       expect(response). to be_success
     end
   end
 
-  context 'when there is no authenticated user', :auth_controller do
+  context 'when there is no authenticated user' do
     it 'cannot access the secure path' do
       get :my_action
       expect(reponse).to be_redirect
@@ -685,14 +712,14 @@ when reconfiguring a client application to use a different auth endpoint
 
 ### Protecting a particular Rails controller action
 
-You can use all of the usual options to `before_filter` for more fine-grained
+You can use all of the usual options to `before_action` for more fine-grained
 control over where authentication is required. For example, to require
 authentication only to edit a resource while leaving all other actions
 unsecured:
 
 ```ruby
 class MyResourcesController < ApplicationController
-  before_filter :authenticate_user!, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:edit, :update]
 
   # ...
 end
@@ -747,8 +774,8 @@ the request format:
 
 ```ruby
 class MyMixedUpController < ApplicationController
-  before_filter :authenticate_api_user!, unless: :is_navigational_format?
-  before_filter :authenticate_user!, if: :is_navigational_format?
+  before_action :authenticate_api_user!, unless: :is_navigational_format?
+  before_action :authenticate_user!, if: :is_navigational_format?
 
   respond_to :html, :json
 
@@ -768,8 +795,8 @@ a signup form, you can try something like this:
 
 ```ruby
 class MyMixedUpController < ApplicationController
-  before_filter :authenticate_api_user!, if: :is_api_request?
-  before_filter :authenticate_user!, unless: :is_api_request?
+  before_action :authenticate_api_user!, if: :is_api_request?
+  before_action :authenticate_user!, unless: :is_api_request?
 
   respond_to :html
 

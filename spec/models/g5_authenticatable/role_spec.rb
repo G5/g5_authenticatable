@@ -1,6 +1,8 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe G5Authenticatable::Role do
+require 'rails_helper'
+
+RSpec.describe G5Authenticatable::Role do
   subject { role }
   let(:role) { G5Authenticatable::Role.new(role_attributes) }
   let(:role_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_role) }
@@ -15,7 +17,7 @@ describe G5Authenticatable::Role do
   describe '.global' do
     subject(:global) { G5Authenticatable::Role.global }
     let!(:global_role) { user.roles.first }
-    let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+    let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
 
     let!(:scoped_role) do
       FactoryGirl.create(:g5_authenticatable_role,
@@ -32,7 +34,9 @@ describe G5Authenticatable::Role do
   end
 
   describe '.class_scoped' do
-    subject(:class_scoped) { G5Authenticatable::Role.class_scoped(G5Authenticatable::User) }
+    subject(:class_scoped) do
+      G5Authenticatable::Role.class_scoped(G5Authenticatable::User)
+    end
     let!(:global_role) { FactoryGirl.create(:g5_authenticatable_role) }
     let!(:class_scoped_role) do
       FactoryGirl.create(:g5_authenticatable_role,

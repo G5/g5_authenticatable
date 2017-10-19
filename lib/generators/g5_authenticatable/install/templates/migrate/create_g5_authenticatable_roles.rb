@@ -1,4 +1,6 @@
-class CreateG5AuthenticatableRoles < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateG5AuthenticatableRoles < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table(:g5_authenticatable_roles) do |t|
       t.string :name

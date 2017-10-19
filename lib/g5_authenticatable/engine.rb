@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'rolify'
 require 'pundit'
 
 module G5Authenticatable
+  # Rails engine for authentication/authorization against G5 Auth server
   class Engine < ::Rails::Engine
     isolate_namespace G5Authenticatable
 
@@ -11,8 +14,8 @@ module G5Authenticatable
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
 
-    initializer "g5_authenticatable.filter_access_token" do |app|
-      app.config.filter_parameters += [ :access_token ]
+    initializer 'g5_authenticatable.filter_access_token' do |app|
+      app.config.filter_parameters += [:access_token]
     end
   end
 end

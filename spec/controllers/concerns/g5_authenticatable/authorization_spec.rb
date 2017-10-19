@@ -1,11 +1,14 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe G5Authenticatable::Authorization, type: :controller do
+require 'rails_helper'
+
+RSpec.describe G5Authenticatable::Authorization, type: :controller do
   controller(ActionController::Base) do
     include G5Authenticatable::Authorization
 
     def index
-      raise Pundit::NotAuthorizedError.new(query: 'index?', record: 'mock_record')
+      raise Pundit::NotAuthorizedError.new(query: 'index?',
+                                           record: 'mock_record')
     end
   end
 
@@ -18,7 +21,7 @@ describe G5Authenticatable::Authorization, type: :controller do
   end
 
   describe '#user_not_authorized' do
-    subject(:user_not_authorized) { get :index, format: format }
+    subject(:user_not_authorized) { safe_get :index, format: format }
 
     context 'when format is json' do
       let(:format) { :json }
@@ -30,7 +33,7 @@ describe G5Authenticatable::Authorization, type: :controller do
 
       it 'renders the json error message' do
         user_not_authorized
-        expect(JSON.parse(response.body)).to eq({'error' => 'Access forbidden'})
+        expect(JSON.parse(response.body)).to eq('error' => 'Access forbidden')
       end
     end
 
@@ -43,7 +46,9 @@ describe G5Authenticatable::Authorization, type: :controller do
 
       it 'renders the static 403.html' do
         user_not_authorized
-        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
+        expect(response.body).to include(
+          '<title>Access forbidden (403)</title>'
+        )
       end
     end
   end

@@ -1,4 +1,6 @@
 # coding: utf-8
+# frozen_string_literal: true
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'g5_authenticatable/version'
@@ -9,9 +11,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ['maeve']
   spec.email         = ['maeve.revels@getg5.com']
   spec.summary       = 'An authentication engine for G5 applications.'
-  spec.description   = %q{An engine that provides a basic User model,
-                          authentication logic, and remote credential
-                          management for G5 applications.}
+  spec.description   = 'An engine that provides a basic User model, ' \
+                       'authentication logic, and remote credential ' \
+                       'management for G5 applications.'
   spec.homepage      = 'https://github.com/G5/g5_authenticatable'
   spec.license       = 'MIT'
 
@@ -20,10 +22,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'devise_g5_authenticatable', '~> 0.3.0'
-  spec.add_dependency 'omniauth-g5', '~> 0.3.1'
-  spec.add_dependency 'g5_authenticatable_api', '~> 0.4.1'
-  spec.add_dependency 'rolify', '~> 4.0'
+  spec.add_dependency 'devise_g5_authenticatable', '~> 1.0'
+  spec.add_dependency 'g5_authenticatable_api', '~> 1.0'
+  spec.add_dependency 'rolify', '~> 5.1.0'
   spec.add_dependency 'pundit', '~> 1.0'
   spec.add_dependency 'g5_updatable', '> 0.6.0'
+
+  spec.add_development_dependency 'factory_girl_rails', '~> 4.8'
+  spec.add_development_dependency 'webmock'
 end

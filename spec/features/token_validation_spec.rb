@@ -1,6 +1,8 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe 'UI Token validation' do
+require 'rails_helper'
+
+RSpec.describe 'UI Token validation' do
   context 'when token validation is enabled' do
     before { G5Authenticatable.strict_token_validation = true }
 

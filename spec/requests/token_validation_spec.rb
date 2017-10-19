@@ -1,9 +1,13 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe 'API Token validation' do
-  let(:token_info_url) { URI.join(ENV['G5_AUTH_ENDPOINT'], '/oauth/token/info') }
+require 'rails_helper'
 
-  subject(:api_call) { get '/rails_api/secure_resource.json' }
+RSpec.describe 'API Token validation' do
+  let(:token_info_url) do
+    URI.join(ENV['G5_AUTH_ENDPOINT'], '/oauth/token/info')
+  end
+
+  subject(:api_call) { safe_get '/rails_api/secure_resource.json' }
 
   context 'when token validation is enabled' do
     before { G5Authenticatable.strict_token_validation = true }
@@ -36,7 +40,7 @@ describe 'API Token validation' do
 
       it 'should return a 401' do
         api_call
-        expect(response).to be_http_unauthorized
+        expect(response.status).to eq(401)
       end
     end
 

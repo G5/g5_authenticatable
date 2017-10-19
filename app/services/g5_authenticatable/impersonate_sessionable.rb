@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module G5Authenticatable
   module ImpersonateSessionable
     extend ActiveSupport::Concern
@@ -15,12 +17,12 @@ module G5Authenticatable
     end
 
     def clear_impersonation_keys
-      impersonate_admin_uid = nil
-      impersonating_user_uid = nil
-      impersonating_user_callback_url = nil
+      self.impersonate_admin_uid = nil
+      self.impersonating_user_uid = nil
+      self.impersonating_user_callback_url = nil
     end
 
-    # Checks if the user by param is able to impersonate the second user by param
+    # Checks if the user is able to impersonate the second user by param
     def check_impersonation_access?(user_impersonating, resource)
       able_to_impersonate?(user_impersonating, resource)
     end
@@ -30,7 +32,8 @@ module G5Authenticatable
     def able_to_impersonate?(user_impersonating, resource)
       return false unless user_impersonating.present? && resource.present?
       if user_impersonating.has_role?(:super_admin) ||
-         (user_impersonating.has_role?(:admin) && !resource.has_role?(:super_admin))
+         (user_impersonating.has_role?(:admin) &&
+          !resource.has_role?(:super_admin))
         true
       else
         false
@@ -57,7 +60,8 @@ module G5Authenticatable
     end
 
     def impersonate_admin_uid?
-      request.env['rack.session'] && request.env['rack.session'][IMPERSONATE_SESSION_KEY].present?
+      request.env['rack.session'] &&
+        request.env['rack.session'][IMPERSONATE_SESSION_KEY].present?
     end
 
     def impersonating_user_uid
@@ -69,7 +73,8 @@ module G5Authenticatable
     end
 
     def impersonating_user_uid?
-      request.env['rack.session'] && request.env['rack.session'][IMPERSONATING_USER_SESSION_KEY].present?
+      request.env['rack.session'] &&
+        request.env['rack.session'][IMPERSONATING_USER_SESSION_KEY].present?
     end
 
     def impersonating_user_callback_url

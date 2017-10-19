@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 # This migration comes from g5_updatable (originally 20140709222005)
-class CreateG5UpdatableClientsAndLocations < ActiveRecord::Migration
+class CreateG5UpdatableClientsAndLocations < ActiveRecord::Migration[4.2]
   def change
     create_table :g5_updatable_clients do |t|
       t.string :uid

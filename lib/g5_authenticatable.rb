@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'g5_authenticatable/engine'
 
 require 'devise_g5_authenticatable'
@@ -15,6 +17,6 @@ module G5Authenticatable
   def self.strict_token_validation=(validate)
     @@strict_token_validation =
       G5AuthenticatableApi.strict_token_validation =
-      Devise.g5_strict_token_validation = validate
+        Devise.g5_strict_token_validation = validate
   end
 end

@@ -1,6 +1,8 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe Post do
+require 'rails_helper'
+
+RSpec.describe Post do
   subject { post }
   let(:post) { FactoryGirl.create(:post) }
 

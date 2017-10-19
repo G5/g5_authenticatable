@@ -1,6 +1,8 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe 'Default role-based authorization UI' do
+require 'rails_helper'
+
+RSpec.describe 'Default role-based authorization UI' do
   describe 'Posts index' do
     let(:visit_posts_index) { visit_path_and_login_with(posts_path, user) }
 
@@ -148,7 +150,9 @@ describe 'Default role-based authorization UI' do
   end
 
   describe 'Edit post' do
-    subject(:edit_post) { visit_path_and_login_with(edit_post_path(post.id), user) }
+    subject(:edit_post) do
+      visit_path_and_login_with(edit_post_path(post.id), user)
+    end
     before { edit_post }
 
     let(:post) { FactoryGirl.create(:post, author: user) }
@@ -222,7 +226,7 @@ describe 'Default role-based authorization UI' do
   describe 'Delete post' do
     subject(:delete_post) { click_link 'Destroy' }
 
-    let!(:post) { FactoryGirl.create(:post, author: user) } 
+    let!(:post) { FactoryGirl.create(:post, author: user) }
     let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
 
     before { visit_path_and_login_with(posts_path, user) }

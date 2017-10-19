@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 # This migration comes from g5_updatable (originally 20141211711945)
-class UpdateNames < ActiveRecord::Migration
+class UpdateNames < ActiveRecord::Migration[4.2]
   def change
     G5Updatable::Client.all.each do |client|
       client.update_attributes(name: client.properties['name'])

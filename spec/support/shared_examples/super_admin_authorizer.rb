@@ -1,4 +1,6 @@
-shared_examples_for 'a super_admin authorizer' do
+# frozen_string_literal: true
+
+RSpec.shared_examples_for 'a super_admin authorizer' do
   context 'when user is an admin' do
     let(:user) { FactoryGirl.create(:g5_authenticatable_admin) }
 

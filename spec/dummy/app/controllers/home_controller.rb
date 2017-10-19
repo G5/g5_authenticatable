@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
-  before_filter :authenticate_user!, only: :show
+  before_action :authenticate_user!, only: :show
 
-  def index
-  end
+  def index; end
 
-  def show
-  end
+  def show; end
 end

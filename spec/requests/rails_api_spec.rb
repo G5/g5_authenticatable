@@ -1,44 +1,46 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe 'a secure Rails API' do
+require 'rails_helper'
+
+RSpec.describe 'a secure Rails API' do
   describe 'POST request to an API-only action' do
-    subject(:api_call) { post '/rails_api/secure_resource' }
+    subject(:api_call) { safe_post '/rails_api/secure_resource' }
 
     context 'with an authenticated user', :auth_request do
       it 'should be successful' do
         api_call
-        expect(response).to be_http_ok
+        expect(response.status).to eq(200)
       end
     end
 
     context 'without an authenticated user' do
       it 'should be unauthorized' do
         api_call
-        expect(response).to be_http_unauthorized
+        expect(response.status).to eq(401)
       end
     end
   end
 
   describe 'GET json request to mixed API/website action' do
-    subject(:api_call) { get '/rails_api/secure_resource.json' }
+    subject(:api_call) { safe_get '/rails_api/secure_resource.json' }
 
     context 'with an authenticated user', :auth_request do
       it 'should be successful' do
         api_call
-        expect(response).to be_http_ok
+        expect(response.status).to eq(200)
       end
     end
 
     context 'without an authenticated user' do
       it 'should be unauthorized' do
         api_call
-        expect(response).to be_http_unauthorized
+        expect(response.status).to eq(401)
       end
     end
   end
 
   describe 'GET html request to mixed API/website action' do
-    subject(:website_call) { get '/rails_api/secure_resource.html' }
+    subject(:website_call) { safe_get '/rails_api/secure_resource.html' }
 
     it 'should be a redirect' do
       website_call
