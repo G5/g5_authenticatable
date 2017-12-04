@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-# We can drop support for factory_girl once the g5_updatable factories
-# are using the FactoryBot constant
+# TODO: drop factory_girl support and force people to upgrade
+# once g5_updatable factories are using the FactoryBot constant
 begin
+  # We need to define the aliased constant before the *_rails gem
+  # tries to load any factory definitions
+  require 'factory_bot'
+  FactoryGirl = FactoryBot
   require 'factory_bot_rails'
-  FactoryGirl = FactoryBot # to make g5_updatable factories work
 rescue LoadError
+  require 'factory_girl'
+  FactoryBot = FactoryGirl
   require 'factory_girl_rails'
-  FactoryBot = FactoryGirl # to make the auth factories work
 end
 
 require 'g5_authenticatable/test/factories/roles'
