@@ -465,7 +465,7 @@ Because the test helpers are optional, bundler will not automatically install
 these dependencies. You will have to add the following gems to your own Gemfile:
 
 * [rspec-rails](https://github.com/rspec/rspec-rails)
-* [factory_girl_rails](https://github.com/thoughtbot/factory_girl_rails)
+* [factory_bot_rails](https://github.com/thoughtbot/factory_bot_rails)
 * [webmock](https://github.com/bblimke/webmock)
 
 #### Incompatibilities ####
@@ -654,7 +654,7 @@ method like so:
 
 ```ruby
 describe 'my page' do
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
   before do
     stub_g5_omniauth(user)
@@ -670,7 +670,7 @@ token using the `stub_invalid_access_token` helper:
 
 ```ruby
 describe 'my API call' do
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
   before { login_user }
 
