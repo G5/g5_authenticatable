@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Post do
   subject { post }
-  let(:post) { FactoryGirl.create(:post) }
+  let(:post) { FactoryBot.create(:post) }
 
   it { is_expected.to belong_to(:author) }
 

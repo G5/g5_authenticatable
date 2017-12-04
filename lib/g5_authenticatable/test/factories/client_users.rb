@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :g5_authenticatable_client_user, parent: :g5_authenticatable_user do
     transient do
       clients nil

@@ -17,7 +17,7 @@ RSpec.describe 'g5_authenticatable:purge_users' do
   end
 
   context 'when there is one local user' do
-    let!(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+    let!(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
     it 'should delete the user data from the db' do
       expect { task.invoke }.to change { G5Authenticatable::User.count }.from(1).to(0)
@@ -25,8 +25,8 @@ RSpec.describe 'g5_authenticatable:purge_users' do
   end
 
   context 'when there are multiple local users' do
-    let!(:user1) { FactoryGirl.create(:g5_authenticatable_user) }
-    let!(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
+    let!(:user1) { FactoryBot.create(:g5_authenticatable_user) }
+    let!(:user2) { FactoryBot.create(:g5_authenticatable_user) }
 
     it 'should delete the user data from the db' do
       expect { task.invoke }.to change { G5Authenticatable::User.count }.from(2).to(0)

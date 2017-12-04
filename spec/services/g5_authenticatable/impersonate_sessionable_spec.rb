@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe G5Authenticatable::ImpersonateSessionable do
-  let!(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+  let!(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
   class MyImpersponateSessionableTest
     include G5Authenticatable::ImpersonateSessionable
@@ -52,25 +52,25 @@ RSpec.describe G5Authenticatable::ImpersonateSessionable do
 
     context 'having a super admin and any other user' do
       let!(:user) do
-        user = FactoryGirl.create(:g5_authenticatable_user)
+        user = FactoryBot.create(:g5_authenticatable_user)
         user.add_role(:super_admin)
         user
       end
-      let!(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
+      let!(:user2) { FactoryBot.create(:g5_authenticatable_user) }
 
       it { is_expected.to eq(true) }
     end
 
     context 'having an admin' do
       let!(:user) do
-        user = FactoryGirl.create(:g5_authenticatable_user)
+        user = FactoryBot.create(:g5_authenticatable_user)
         user.add_role(:admin)
         user
       end
 
       context 'assuming a super admin' do
         let!(:user2) do
-          user = FactoryGirl.create(:g5_authenticatable_user)
+          user = FactoryBot.create(:g5_authenticatable_user)
           user.add_role(:super_admin)
           user
         end
@@ -80,7 +80,7 @@ RSpec.describe G5Authenticatable::ImpersonateSessionable do
 
       context 'assuming another admin' do
         let!(:user2) do
-          user = FactoryGirl.create(:g5_authenticatable_user)
+          user = FactoryBot.create(:g5_authenticatable_user)
           user.add_role(:admin)
           user
         end
@@ -89,7 +89,7 @@ RSpec.describe G5Authenticatable::ImpersonateSessionable do
       end
 
       context 'assuming a regular user' do
-        let!(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
+        let!(:user2) { FactoryBot.create(:g5_authenticatable_user) }
 
         it { is_expected.to eq(true) }
       end
@@ -97,7 +97,7 @@ RSpec.describe G5Authenticatable::ImpersonateSessionable do
 
     context 'providing no user' do
       context 'when user to impersonate is nil' do
-        let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+        let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
         let(:user2) {}
 
         it { is_expected.to eq(false) }
@@ -105,7 +105,7 @@ RSpec.describe G5Authenticatable::ImpersonateSessionable do
 
       context 'when signed-in user is nil' do
         let(:user) {}
-        let(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
+        let(:user2) { FactoryBot.create(:g5_authenticatable_user) }
 
         it { is_expected.to eq(false) }
       end

@@ -7,7 +7,7 @@ RSpec.describe 'UI Token validation' do
     before { G5Authenticatable.strict_token_validation = true }
 
     context 'when user has a valid g5 access token' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       before do
         stub_g5_omniauth(user)
@@ -27,7 +27,7 @@ RSpec.describe 'UI Token validation' do
     end
 
     context 'when user access token becomes invalid' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       before do
         # User access token is valid at sign in
@@ -67,7 +67,7 @@ RSpec.describe 'UI Token validation' do
     end
 
     context 'when user access token has become invalid' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       before do
         stub_g5_omniauth(user)

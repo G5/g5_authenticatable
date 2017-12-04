@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe ApplicationPolicy do
   subject(:policy) { described_class }
 
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
-  let(:record) { FactoryGirl.create(:post) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_user) }
+  let(:record) { FactoryBot.create(:post) }
 
   permissions :index? do
     it_behaves_like 'a super_admin authorizer'
@@ -14,14 +14,14 @@ RSpec.describe ApplicationPolicy do
 
   permissions :show? do
     context 'when user is a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       context 'when record exists in scope' do
         it { is_expected.to permit(user, record) }
       end
 
       context 'when record does not exist in scope' do
-        let(:record) { FactoryGirl.build(:post) }
+        let(:record) { FactoryBot.build(:post) }
 
         it { is_expected.to_not permit(user, record) }
       end
@@ -75,7 +75,7 @@ RSpec.describe ApplicationPolicy do
     end
 
     context 'when user has the super_admin role' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it { is_expected.to eq(true) }
     end
@@ -95,7 +95,7 @@ RSpec.describe ApplicationPolicy do
     end
 
     context 'when user has the admin role' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_admin) }
 
       it { is_expected.to eq(true) }
     end
@@ -115,7 +115,7 @@ RSpec.describe ApplicationPolicy do
     end
 
     context 'when user has the editor role' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_editor) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_editor) }
 
       it { is_expected.to eq(true) }
     end
@@ -131,13 +131,13 @@ RSpec.describe ApplicationPolicy do
     end
 
     context 'when user does not have viewer role' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_editor) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_editor) }
 
       it { is_expected.to eq(false) }
     end
 
     context 'when user has the viewer role' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_viewer) }
 
       it { is_expected.to eq(true) }
     end
@@ -147,35 +147,35 @@ RSpec.describe ApplicationPolicy do
     subject(:global_role?) { policy.new(user, record).global_role? }
 
     let(:scoped_role) do
-      FactoryGirl.create(:g5_authenticatable_role, name: role_name,
+      FactoryBot.create(:g5_authenticatable_role, name: role_name,
                                                    resource: resource)
     end
-    let(:resource) { FactoryGirl.create(:g5_updatable_client) }
+    let(:resource) { FactoryBot.create(:g5_updatable_client) }
 
     context 'when there is no user' do
       it { is_expected.to eq(false) }
     end
 
     context 'when the user is a global super admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it { is_expected.to eq(true) }
     end
 
     context 'when the user is a global admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_admin) }
 
       it { is_expected.to eq(true) }
     end
 
     context 'when the user is a global editor' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_editor) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_editor) }
 
       it { is_expected.to eq(true) }
     end
 
     context 'when the user is a global viewer' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_viewer) }
 
       it { is_expected.to eq(true) }
     end

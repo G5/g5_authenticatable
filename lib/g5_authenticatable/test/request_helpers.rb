@@ -20,7 +20,7 @@ end
 RSpec.shared_context 'auth request' do
   include G5Authenticatable::Test::RequestHelpers
 
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
   before do
     login_user(user)
