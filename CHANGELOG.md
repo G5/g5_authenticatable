@@ -1,4 +1,4 @@
-## v1.1.0.pre.1 (2017-12-04)
+## v1.1.0 (2017-12-08)
 
 * Added support for [factory_bot_rails](https://github.com/thoughtbot/factory_bot_rails)
   while deprecating support for factory_girl_rails. Existing projects that use
