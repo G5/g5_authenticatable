@@ -17,13 +17,13 @@ module G5Authenticatable
 end
 
 RSpec.shared_context 'auth controller' do
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_user) }
   include_context 'authorization controller'
 end
 
 RSpec.shared_context 'super admin auth controller' do
   let(:user) do
-    user = FactoryGirl.create(:g5_authenticatable_user)
+    user = FactoryBot.create(:g5_authenticatable_user)
     user.add_role(:super_admin)
     user
   end
@@ -32,7 +32,7 @@ end
 
 RSpec.shared_context 'admin auth controller' do
   let(:user) do
-    user = FactoryGirl.create(:g5_authenticatable_user)
+    user = FactoryBot.create(:g5_authenticatable_user)
     user.add_role(:admin)
     user
   end

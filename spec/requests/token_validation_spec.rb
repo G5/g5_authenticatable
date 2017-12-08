@@ -13,7 +13,7 @@ RSpec.describe 'API Token validation' do
     before { G5Authenticatable.strict_token_validation = true }
 
     context 'when user has a valid g5 access token' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       before do
         login_user(user)
@@ -29,7 +29,7 @@ RSpec.describe 'API Token validation' do
     end
 
     context 'when user has an invalid g5 access token' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       before do
         login_user(user)
@@ -56,7 +56,7 @@ RSpec.describe 'API Token validation' do
     before { G5Authenticatable.strict_token_validation = false }
 
     context 'when the user has an invalid g5 access token' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       before do
         login_user(user)

@@ -6,13 +6,13 @@ RSpec.describe 'Default role-based authorization UI' do
   describe 'Posts index' do
     let(:visit_posts_index) { visit_path_and_login_with(posts_path, user) }
 
-    let!(:post) { FactoryGirl.create(:post, author: user) }
-    let!(:other_post) { FactoryGirl.create(:post) }
+    let!(:post) { FactoryBot.create(:post, author: user) }
+    let!(:other_post) { FactoryBot.create(:post) }
 
     before { visit_posts_index }
 
     context 'when authenticated user is a super admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'renders the posts index page' do
         expect(current_path).to eq(posts_path)
@@ -28,7 +28,7 @@ RSpec.describe 'Default role-based authorization UI' do
     end
 
     context 'when authenticated user is not a super admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       it 'displays an error message' do
         expect(page).to have_content(/forbidden/i)
@@ -47,12 +47,12 @@ RSpec.describe 'Default role-based authorization UI' do
   describe 'Show post' do
     let(:show_post) { visit_path_and_login_with(post_path(post.id), user) }
 
-    let!(:post) { FactoryGirl.create(:post, author: user) }
+    let!(:post) { FactoryBot.create(:post, author: user) }
 
     before { show_post }
 
     context 'when authenticated user is a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'renders the show post page' do
         expect(current_path).to eq(post_path(post.id))
@@ -64,7 +64,7 @@ RSpec.describe 'Default role-based authorization UI' do
     end
 
     context 'when authenticated user is not a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       it 'displays an error message' do
         expect(page).to have_content(/forbidden/i)
@@ -82,7 +82,7 @@ RSpec.describe 'Default role-based authorization UI' do
     before { visit_new_post }
 
     context 'when authenticated user is a super admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'renders the new post page' do
         expect(current_path).to eq(new_post_path)
@@ -94,7 +94,7 @@ RSpec.describe 'Default role-based authorization UI' do
     end
 
     context 'when authenticated user is not a super admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       it 'displays an error message' do
         expect(page).to have_content(/forbidden/i)
@@ -114,8 +114,8 @@ RSpec.describe 'Default role-based authorization UI' do
       fill_in 'Content', with: post.content
     end
 
-    let(:post) { FactoryGirl.build(:post, author: user) }
-    let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+    let(:post) { FactoryBot.build(:post, author: user) }
+    let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
     context 'when authenticated user is a super admin' do
       it 'renders the flash message' do
@@ -155,10 +155,10 @@ RSpec.describe 'Default role-based authorization UI' do
     end
     before { edit_post }
 
-    let(:post) { FactoryGirl.create(:post, author: user) }
+    let(:post) { FactoryBot.create(:post, author: user) }
 
     context 'when authenticated user is a super admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'renders the edit post page' do
         expect(current_path).to eq(edit_post_path(post.id))
@@ -170,7 +170,7 @@ RSpec.describe 'Default role-based authorization UI' do
     end
 
     context 'when authenticated user is not a super admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
       it 'displays an error message' do
         expect(page).to have_content(/forbidden/i)
@@ -190,8 +190,8 @@ RSpec.describe 'Default role-based authorization UI' do
       fill_in 'Content', with: new_content
     end
 
-    let(:post) { FactoryGirl.create(:post, author: user) }
-    let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+    let(:post) { FactoryBot.create(:post, author: user) }
+    let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
     let(:new_content) { 'My updated post content' }
 
     context 'when authenticated user is a super admin' do
@@ -226,8 +226,8 @@ RSpec.describe 'Default role-based authorization UI' do
   describe 'Delete post' do
     subject(:delete_post) { click_link 'Destroy' }
 
-    let!(:post) { FactoryGirl.create(:post, author: user) }
-    let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+    let!(:post) { FactoryBot.create(:post, author: user) }
+    let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
     before { visit_path_and_login_with(posts_path, user) }
 

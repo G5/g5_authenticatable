@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :g5_authenticatable_role, class: 'G5Authenticatable::Role' do
     sequence(:name) { |n| "role_#{n}" }
   end

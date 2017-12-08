@@ -52,7 +52,7 @@ end
 RSpec.shared_context 'auth' do
   include G5Authenticatable::Test::FeatureHelpers
 
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_user) }
 
   before do
     stub_g5_omniauth(user)

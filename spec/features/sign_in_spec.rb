@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Signing in' do
-  let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_viewer) }
 
   context 'from a login link' do
     subject(:login) { click_link 'Login' }
@@ -43,7 +43,7 @@ RSpec.describe 'Signing in' do
       let(:updated_organization_name) { "Updated #{user.organization_name}" }
       let(:updated_access_token) { "updated-#{user.g5_access_token}-123" }
       let(:updated_role) do
-        FactoryGirl.create(:g5_authenticatable_super_admin_role)
+        FactoryBot.create(:g5_authenticatable_super_admin_role)
       end
 
       it 'should sign in the user successfully' do
@@ -136,10 +136,10 @@ RSpec.describe 'Signing in' do
       end
 
       let(:user_attributes) do
-        FactoryGirl.attributes_for(:g5_authenticatable_user)
+        FactoryBot.attributes_for(:g5_authenticatable_user)
       end
       let(:role_attributes) do
-        FactoryGirl.attributes_for(:g5_authenticatable_editor_role)
+        FactoryBot.attributes_for(:g5_authenticatable_editor_role)
       end
 
       it 'should sign in the user successfully' do

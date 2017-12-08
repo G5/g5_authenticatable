@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe G5Authenticatable::User do
   subject { user }
   let(:user) { G5Authenticatable::User.create(user_attributes) }
-  let(:user_attributes) { FactoryGirl.attributes_for(:g5_authenticatable_user) }
+  let(:user_attributes) { FactoryBot.attributes_for(:g5_authenticatable_user) }
 
   it { is_expected.to have_and_belong_to_many(:roles) }
 
@@ -96,10 +96,10 @@ RSpec.describe G5Authenticatable::User do
     end
 
     let(:new_user_attributes) do
-      FactoryGirl.attributes_for(:g5_authenticatable_user)
+      FactoryBot.attributes_for(:g5_authenticatable_user)
     end
     let(:new_role_attributes) do
-      FactoryGirl.attributes_for(:g5_authenticatable_role)
+      FactoryBot.attributes_for(:g5_authenticatable_role)
     end
 
     it 'has the correct uid' do
@@ -177,10 +177,10 @@ RSpec.describe G5Authenticatable::User do
     end
 
     let(:new_user_attributes) do
-      FactoryGirl.attributes_for(:g5_authenticatable_user)
+      FactoryBot.attributes_for(:g5_authenticatable_user)
     end
     let(:new_role_attributes) do
-      FactoryGirl.attributes_for(:g5_authenticatable_role)
+      FactoryBot.attributes_for(:g5_authenticatable_role)
     end
 
     context 'when there is auth data in the session' do
@@ -280,7 +280,7 @@ RSpec.describe G5Authenticatable::User do
     end
 
     let(:user_attributes) do
-      FactoryGirl.attributes_for(:g5_authenticatable_user,
+      FactoryBot.attributes_for(:g5_authenticatable_user,
                                  first_name: nil,
                                  last_name: nil,
                                  phone_number: nil,
@@ -442,7 +442,7 @@ RSpec.describe G5Authenticatable::User do
     subject(:add_role) { user.add_role(role_name) }
 
     context 'when role already exists' do
-      let(:role) { FactoryGirl.create(:g5_authenticatable_role) }
+      let(:role) { FactoryBot.create(:g5_authenticatable_role) }
       let(:role_name) { role.name }
 
       it 'should assign a role to the user' do
@@ -496,10 +496,10 @@ RSpec.describe G5Authenticatable::User do
 
     let(:user2) { G5Authenticatable::User.create(user_attributes) }
     let(:user_attributes2) do
-      FactoryGirl.attributes_for(:g5_authenticatable_user)
+      FactoryBot.attributes_for(:g5_authenticatable_user)
     end
 
-    let!(:resource) { FactoryGirl.create(:g5_updatable_client) }
+    let!(:resource) { FactoryBot.create(:g5_updatable_client) }
 
     let(:auth_data) do
       OmniAuth::AuthHash.new(

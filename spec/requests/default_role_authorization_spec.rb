@@ -8,13 +8,13 @@ RSpec.describe 'Default role-based authorization API' do
   describe 'GET /posts', :auth_request do
     subject(:get_posts) { safe_get posts_path, format: :json }
 
-    let!(:post) { FactoryGirl.create(:post, author: user) }
-    let!(:other_post) { FactoryGirl.create(:post) }
+    let!(:post) { FactoryBot.create(:post, author: user) }
+    let!(:other_post) { FactoryBot.create(:post) }
 
     before { get_posts }
 
     context 'when user is a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'returns ok' do
         expect(response).to be_ok
@@ -42,12 +42,12 @@ RSpec.describe 'Default role-based authorization API' do
   describe 'GET /posts/:id', :auth_request do
     subject(:show_post) { safe_get post_path(post.id), format: :json }
 
-    let(:post) { FactoryGirl.create(:post, author: user) }
+    let(:post) { FactoryBot.create(:post, author: user) }
 
     before { show_post }
 
     context 'when user is a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'returns ok' do
         expect(response).to be_ok
@@ -61,7 +61,7 @@ RSpec.describe 'Default role-based authorization API' do
     end
 
     context 'when user is not a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_viewer) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_viewer) }
 
       it 'returns forbidden' do
         expect(response).to be_forbidden
@@ -77,10 +77,10 @@ RSpec.describe 'Default role-based authorization API' do
     let(:post_params) do
       { content: post_obj.content, author_id: post_obj.author.id }
     end
-    let(:post_obj) { FactoryGirl.build(:post, author: user) }
+    let(:post_obj) { FactoryBot.build(:post, author: user) }
 
     context 'when user is a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'returns ok' do
         create_post
@@ -112,10 +112,10 @@ RSpec.describe 'Default role-based authorization API' do
     let(:post_params) do
       { content: 'some brand new content', author_id: post.author.id }
     end
-    let(:post) { FactoryGirl.create(:post, author: user) }
+    let(:post) { FactoryBot.create(:post, author: user) }
 
     context 'when user is a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'returns ok' do
         update_post
@@ -144,10 +144,10 @@ RSpec.describe 'Default role-based authorization API' do
       safe_delete post_path(post.id), format: :json
     end
 
-    let!(:post) { FactoryGirl.create(:post, author: user) }
+    let!(:post) { FactoryBot.create(:post, author: user) }
 
     context 'when user is a super_admin' do
-      let(:user) { FactoryGirl.create(:g5_authenticatable_super_admin) }
+      let(:user) { FactoryBot.create(:g5_authenticatable_super_admin) }
 
       it 'returns ok' do
         delete_post

@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe G5Updatable::SelectableClientPolicy do
   subject(:policy) { described_class }
 
-  let(:user) { FactoryGirl.create(:g5_authenticatable_user) }
-  let(:user2) { FactoryGirl.create(:g5_authenticatable_user) }
+  let(:user) { FactoryBot.create(:g5_authenticatable_user) }
+  let(:user2) { FactoryBot.create(:g5_authenticatable_user) }
 
   before do
     user.roles = []
@@ -14,9 +14,9 @@ RSpec.describe G5Updatable::SelectableClientPolicy do
     user2.add_role(:viewer, client_1)
   end
 
-  let!(:client_1) { FactoryGirl.create(:g5_updatable_client) }
-  let!(:client_2) { FactoryGirl.create(:g5_updatable_client) }
-  let!(:client_3) { FactoryGirl.create(:g5_updatable_client) }
+  let!(:client_1) { FactoryBot.create(:g5_updatable_client) }
+  let!(:client_2) { FactoryBot.create(:g5_updatable_client) }
+  let!(:client_3) { FactoryBot.create(:g5_updatable_client) }
 
   describe '.resolve' do
     subject do
@@ -25,17 +25,17 @@ RSpec.describe G5Updatable::SelectableClientPolicy do
     end
 
     let!(:location_1) do
-      FactoryGirl.create(:g5_updatable_location, client: client_1)
+      FactoryBot.create(:g5_updatable_location, client: client_1)
     end
     let!(:location_2) do
-      FactoryGirl.create(:g5_updatable_location, client: client_1)
+      FactoryBot.create(:g5_updatable_location, client: client_1)
     end
 
     let!(:location_3) do
-      FactoryGirl.create(:g5_updatable_location, client: client_2)
+      FactoryBot.create(:g5_updatable_location, client: client_2)
     end
     let!(:location_4) do
-      FactoryGirl.create(:g5_updatable_location, client: client_2)
+      FactoryBot.create(:g5_updatable_location, client: client_2)
     end
 
     context 'with global role' do
