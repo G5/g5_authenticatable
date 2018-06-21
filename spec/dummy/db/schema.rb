@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613201436) do
+ActiveRecord::Schema.define(version: 2018_06_21_044009) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "plpgsql"
 
   create_table "g5_authenticatable_roles", id: :serial, force: :cascade do |t|
     t.string "name"
@@ -65,6 +65,18 @@ ActiveRecord::Schema.define(version: 20170613201436) do
     t.index ["urn"], name: "index_g5_updatable_clients_on_urn", unique: true
   end
 
+  create_table "g5_updatable_hour_sets", id: :serial, force: :cascade do |t|
+    t.integer "g5_updatable_location_id"
+    t.integer "location_id"
+    t.string "name"
+    t.string "hour_type"
+    t.boolean "is_active"
+    t.string "additional_hours_info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["g5_updatable_location_id"], name: "index_g5_updatable_hour_sets_location_id"
+  end
+
   create_table "g5_updatable_hub_amenities", id: :serial, force: :cascade do |t|
     t.integer "external_id"
     t.string "name"
@@ -95,6 +107,7 @@ ActiveRecord::Schema.define(version: 20170613201436) do
     t.float "longitude"
     t.string "flat_amenity_names"
     t.string "client_urn"
+    t.string "display_name"
     t.index ["client_urn"], name: "index_g5_updatable_locations_on_client_urn"
     t.index ["latitude"], name: "index_g5_updatable_locations_on_latitude"
     t.index ["longitude"], name: "index_g5_updatable_locations_on_longitude"
@@ -116,7 +129,38 @@ ActiveRecord::Schema.define(version: 20170613201436) do
     t.float "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "phone_number"
+    t.string "website"
+    t.string "google_map_url"
     t.index ["g5_updatable_location_id"], name: "index_g5_updatable_poi_location_id"
+  end
+
+  create_table "g5_updatable_special_dates", id: :serial, force: :cascade do |t|
+    t.integer "g5_updatable_location_id"
+    t.integer "hour_set_id"
+    t.date "date"
+    t.time "open"
+    t.time "close"
+    t.boolean "is_regular_hours", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "status", default: "none"
+    t.index ["g5_updatable_location_id"], name: "index_g5_updatable_special_dates_location_id"
+    t.index ["hour_set_id"], name: "index_g5_updatable_special_dates_on_hour_set_id"
+  end
+
+  create_table "g5_updatable_week_days", id: :serial, force: :cascade do |t|
+    t.integer "g5_updatable_location_id"
+    t.integer "hour_set_id"
+    t.integer "day_of_week"
+    t.time "open"
+    t.time "close"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "status", default: "none"
+    t.index ["day_of_week"], name: "index_g5_updatable_week_days_on_day_of_week"
+    t.index ["g5_updatable_location_id"], name: "index_g5_updatable_business_days_location_id"
+    t.index ["hour_set_id"], name: "index_g5_updatable_week_days_on_hour_set_id"
   end
 
   create_table "posts", id: :serial, force: :cascade do |t|
