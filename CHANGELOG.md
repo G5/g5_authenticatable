@@ -1,3 +1,9 @@
+## v1.1.1 (2018-06-21)
+
+* Support rails 5.2 green field apps, including fixes for setting the default
+  secret key and removing an unnecessary jquery dependency
+  ([#55][https://github.com/G5/g5_authenticatable/pull/55])
+
 ## v1.1.0 (2017-12-08)
 
 * Added support for [factory_bot_rails](https://github.com/thoughtbot/factory_bot_rails)
