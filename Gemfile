@@ -10,7 +10,6 @@ gemspec
 # Gems used by the dummy application
 gem 'active_model_serializers', '<= 0.10.0' # For compatibility with ruby 2.0.0
 gem 'grape'
-gem 'jquery-rails'
 gem 'pg'
 gem 'rails', '~> 5.2.0'
 
