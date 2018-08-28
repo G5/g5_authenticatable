@@ -360,7 +360,7 @@ RSpec.describe G5Authenticatable::User do
       end
 
       it 'should not change the user roles' do
-        expect { updated_user }.to_not change { user.reload.roles }
+        expect { updated_user }.to_not change { user.roles.reload.to_a }
       end
     end
 
