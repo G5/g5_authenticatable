@@ -76,7 +76,7 @@ root to: 'home#index'
 ### Registering your OAuth application
 
 1. Visit the auth server admin console and login:
-  * For development, visit https://dev-auth.g5search.com/admin
+  * For development, visit https://auth-staging.g5devops.com/admin
   * For production, visit https://auth.g5search.com/admin
 2. Click "New Application"
 3. Enter a name that recognizably identifies your application.
@@ -106,7 +106,7 @@ environment variables for your client application:
 * `G5_AUTH_CLIENT_SECRET` - the OAuth 2.0 application secret from the auth server
 * `G5_AUTH_REDIRECT_URI` - the OAuth 2.0 redirect URI registered with the auth server
 * `G5_AUTH_ENDPOINT` - the endpoint URL (without any path info) for the G5 auth server.
-  Generally, this will be set to either `https://dev-auth.g5search.com` or
+  Generally, this will be set to either `https://auth-staging.g5devops.com` or
   `https://auth.g5search.com` (the default).
 
 If you need to make server-to-server API calls that are not associated with an
