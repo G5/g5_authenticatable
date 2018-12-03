@@ -75,11 +75,11 @@ module G5Authenticatable
       user.present? && user.has_role?(:admin)
     end
 
-    def editor?(global_scope=false)
+    def editor?
       user.present? && user.has_role?(:editor)
     end
 
-    def viewer?(global_scope=false)
+    def viewer?
       user.present? && user.has_role?(:viewer)
     end
 
