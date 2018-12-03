@@ -71,26 +71,16 @@ module G5Authenticatable
       user.present? && user.has_role?(:super_admin)
     end
 
-    def check_for_role(role_name,global_scope=false)
-      if user.present?
-        query = user.roles.where(name: role_name)
-        query = query.where(resource_type: nil) if global_scope
-        return query.exists?
-      else
-        return false
-      end
-    end
-
-    def admin?(global_scope=false)
-      check_for_role(:admin,global_scope)
+    def admin?
+      user.present? && user.has_role?(:admin)
     end
 
     def editor?(global_scope=false)
-      check_for_role(:editor,global_scope)
+      user.present? && user.has_role?(:editor)
     end
 
     def viewer?(global_scope=false)
-      check_for_role(:viewer,global_scope)
+      user.present? && user.has_role?(:viewer)
     end
 
     def has_global_role?
@@ -102,7 +92,7 @@ module G5Authenticatable
     end
 
     def global_role?
-      super_admin? || admin?(true) || editor?(true) || viewer?(true)
+      user.roles.global.exists?
     end
   end
 end
