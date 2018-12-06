@@ -92,7 +92,7 @@ module G5Authenticatable
     end
 
     def global_role?
-      super_admin? || admin? || editor? || viewer?
+      user.roles.global.exists?
     end
   end
 end
