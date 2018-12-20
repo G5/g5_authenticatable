@@ -9,6 +9,11 @@ RSpec.describe G5Authenticatable::User do
 
   it { is_expected.to have_and_belong_to_many(:roles) }
 
+  it 'has an current_client_urn attr_accessor' do
+    subject.current_client_urn = 'foo'
+    expect(subject.current_client_urn).to eq('foo')
+  end
+
   it 'should expose the email' do
     expect(user.email).to eq(user_attributes[:email])
   end
@@ -68,30 +73,30 @@ RSpec.describe G5Authenticatable::User do
       full_name = [new_user_attributes[:first_name],
                    new_user_attributes[:last_name]].join(' ')
       OmniAuth::AuthHash.new(
-        'uid' => new_user_attributes[:uid],
-        'provider' => new_user_attributes[:provider],
-        'info' => {
-          'email' => new_user_attributes[:email],
-          'name' => full_name,
-          'first_name' => new_user_attributes[:first_name],
-          'last_name' => new_user_attributes[:last_name],
-          'phone' => new_user_attributes[:phone_number]
-        },
-        'credentials' => {
-          'token' => new_user_attributes[:g5_access_token],
-          'expires' => true,
-          'expires_at' => Time.now + 1000
-        },
-        'extra' => {
-          'title' => new_user_attributes[:title],
-          'organization_name' => new_user_attributes[:organization_name],
-          'roles' => [
-            { 'name' => new_role_attributes[:name],
-              'type' => 'GLOBAL',
-              'urn' => nil }
-          ],
-          'raw_info' => {}
-        }
+          'uid'         => new_user_attributes[:uid],
+          'provider'    => new_user_attributes[:provider],
+          'info'        => {
+              'email'      => new_user_attributes[:email],
+              'name'       => full_name,
+              'first_name' => new_user_attributes[:first_name],
+              'last_name'  => new_user_attributes[:last_name],
+              'phone'      => new_user_attributes[:phone_number]
+          },
+          'credentials' => {
+              'token'      => new_user_attributes[:g5_access_token],
+              'expires'    => true,
+              'expires_at' => Time.now + 1000
+          },
+          'extra'       => {
+              'title'             => new_user_attributes[:title],
+              'organization_name' => new_user_attributes[:organization_name],
+              'roles'             => [
+                  { 'name' => new_role_attributes[:name],
+                    'type' => 'GLOBAL',
+                    'urn'  => nil }
+              ],
+              'raw_info'          => {}
+          }
       )
     end
 
@@ -108,17 +113,17 @@ RSpec.describe G5Authenticatable::User do
 
     it 'has the correct provider' do
       expect(attributes_from_auth[:provider])
-        .to eq(new_user_attributes[:provider])
+          .to eq(new_user_attributes[:provider])
     end
 
     it 'has the correct first_name' do
       expect(attributes_from_auth[:first_name])
-        .to eq(new_user_attributes[:first_name])
+          .to eq(new_user_attributes[:first_name])
     end
 
     it 'has the correct last_name' do
       expect(attributes_from_auth[:last_name])
-        .to eq(new_user_attributes[:last_name])
+          .to eq(new_user_attributes[:last_name])
     end
 
     it 'has the correct email' do
@@ -127,7 +132,7 @@ RSpec.describe G5Authenticatable::User do
 
     it 'has the correct phone_number' do
       expect(attributes_from_auth[:phone_number])
-        .to eq(new_user_attributes[:phone_number])
+          .to eq(new_user_attributes[:phone_number])
     end
 
     it 'has the correct title' do
@@ -136,7 +141,7 @@ RSpec.describe G5Authenticatable::User do
 
     it 'has the correct organization_name' do
       expect(attributes_from_auth[:organization_name])
-        .to eq(new_user_attributes[:organization_name])
+          .to eq(new_user_attributes[:organization_name])
     end
   end
 
@@ -150,29 +155,29 @@ RSpec.describe G5Authenticatable::User do
       full_name = [new_user_attributes[:first_name],
                    new_user_attributes[:last_name]].join(' ')
       OmniAuth::AuthHash.new(
-        'provider' => new_user_attributes[:provider],
-        'info' => {
-          'email' => new_user_attributes[:email],
-          'name' => full_name,
-          'first_name' => new_user_attributes[:first_name],
-          'last_name' => new_user_attributes[:last_name],
-          'phone' => new_user_attributes[:phone_number]
-        },
-        'credentials' => {
-          'token' => new_user_attributes[:g5_access_token],
-          'expires' => true,
-          'expires_at' => Time.now + 1000
-        },
-        'extra' => {
-          'title' => new_user_attributes[:title],
-          'organization_name' => new_user_attributes[:organization_name],
-          'roles' => [
-            { 'name' => new_role_attributes[:name],
-              'type' => 'GLOBAL',
-              'urn' => nil }
-          ],
-          'raw_info' => {}
-        }
+          'provider'    => new_user_attributes[:provider],
+          'info'        => {
+              'email'      => new_user_attributes[:email],
+              'name'       => full_name,
+              'first_name' => new_user_attributes[:first_name],
+              'last_name'  => new_user_attributes[:last_name],
+              'phone'      => new_user_attributes[:phone_number]
+          },
+          'credentials' => {
+              'token'      => new_user_attributes[:g5_access_token],
+              'expires'    => true,
+              'expires_at' => Time.now + 1000
+          },
+          'extra'       => {
+              'title'             => new_user_attributes[:title],
+              'organization_name' => new_user_attributes[:organization_name],
+              'roles'             => [
+                  { 'name' => new_role_attributes[:name],
+                    'type' => 'GLOBAL',
+                    'urn'  => nil }
+              ],
+              'raw_info'          => {}
+          }
       )
     end
 
@@ -237,7 +242,7 @@ RSpec.describe G5Authenticatable::User do
 
       it 'should set the organization_name from the session data' do
         expect(new_user.organization_name)
-          .to eq(new_user_attributes[:organization_name])
+            .to eq(new_user_attributes[:organization_name])
       end
 
       it 'should assign the role from the session data' do
@@ -281,11 +286,11 @@ RSpec.describe G5Authenticatable::User do
 
     let(:user_attributes) do
       FactoryBot.attributes_for(:g5_authenticatable_user,
-                                 first_name: nil,
-                                 last_name: nil,
-                                 phone_number: nil,
-                                 title: nil,
-                                 organization_name: nil)
+                                first_name:        nil,
+                                last_name:         nil,
+                                phone_number:      nil,
+                                title:             nil,
+                                organization_name: nil)
     end
     let(:role_name) { :my_role }
 
@@ -296,27 +301,27 @@ RSpec.describe G5Authenticatable::User do
 
     let(:auth_data) do
       OmniAuth::AuthHash.new(
-        'provider' => user_attributes[:provider],
-        'uid' => user_attributes[:uid],
-        'info' => {
-          'email' => updated_attributes[:email],
-          'first_name' => updated_attributes[:first_name],
-          'last_name' => updated_attributes[:last_name],
-          'phone' => updated_attributes[:phone_number]
-        },
-        'credentials' => {
-          'token' => updated_attributes[:g5_access_token],
-          'expires' => true,
-          'expires_at' => Time.now + 1000
-        },
-        'extra' => {
-          'title' => updated_attributes[:title],
-          'organization_name' => updated_attributes[:organization_name],
-          'roles' => [
-            { name: updated_role_name, type: 'GLOBAL', urn: nil }
-          ],
-          'raw_info' => {}
-        }
+          'provider'    => user_attributes[:provider],
+          'uid'         => user_attributes[:uid],
+          'info'        => {
+              'email'      => updated_attributes[:email],
+              'first_name' => updated_attributes[:first_name],
+              'last_name'  => updated_attributes[:last_name],
+              'phone'      => updated_attributes[:phone_number]
+          },
+          'credentials' => {
+              'token'      => updated_attributes[:g5_access_token],
+              'expires'    => true,
+              'expires_at' => Time.now + 1000
+          },
+          'extra'       => {
+              'title'             => updated_attributes[:title],
+              'organization_name' => updated_attributes[:organization_name],
+              'roles'             => [
+                  { name: updated_role_name, type: 'GLOBAL', urn: nil }
+              ],
+              'raw_info'          => {}
+          }
       )
     end
 
@@ -328,7 +333,7 @@ RSpec.describe G5Authenticatable::User do
 
       it 'should update the access token' do
         expect { updated_user }.to change { user.reload.g5_access_token }
-          .to(updated_attributes[:g5_access_token])
+                                       .to(updated_attributes[:g5_access_token])
       end
 
       it 'should return the updated user' do
@@ -367,15 +372,15 @@ RSpec.describe G5Authenticatable::User do
     context 'when user info has changed' do
       let(:updated_attributes) do
         {
-          uid: user.uid,
-          provider: user.provider,
-          email: 'updated.email@test.host',
-          g5_access_token: 'updatedtoken42',
-          first_name: 'Updated First Name',
-          last_name: 'Updated Last Name',
-          phone_number: '555.555.5555 x123',
-          title: 'Recently Promoted',
-          organization_name: 'Updated Department'
+            uid:               user.uid,
+            provider:          user.provider,
+            email:             'updated.email@test.host',
+            g5_access_token:   'updatedtoken42',
+            first_name:        'Updated First Name',
+            last_name:         'Updated Last Name',
+            phone_number:      '555.555.5555 x123',
+            title:             'Recently Promoted',
+            organization_name: 'Updated Department'
         }
       end
 
@@ -383,7 +388,7 @@ RSpec.describe G5Authenticatable::User do
 
       it 'should update the access token' do
         expect { updated_user }.to change { user.reload.g5_access_token }
-          .to(updated_attributes[:g5_access_token])
+                                       .to(updated_attributes[:g5_access_token])
       end
 
       it 'should return the updated user' do
@@ -400,32 +405,32 @@ RSpec.describe G5Authenticatable::User do
 
       it 'should update the email' do
         expect { updated_user }.to change { user.reload.email }
-          .to(updated_attributes[:email])
+                                       .to(updated_attributes[:email])
       end
 
       it 'should update the first name' do
         expect { updated_user }.to change { user.reload.first_name }
-          .to(updated_attributes[:first_name])
+                                       .to(updated_attributes[:first_name])
       end
 
       it 'should update the last name' do
         expect { updated_user }.to change { user.reload.last_name }
-          .to(updated_attributes[:last_name])
+                                       .to(updated_attributes[:last_name])
       end
 
       it 'should update the phone number' do
         expect { updated_user }.to change { user.reload.phone_number }
-          .to(updated_attributes[:phone_number])
+                                       .to(updated_attributes[:phone_number])
       end
 
       it 'should update the title' do
         expect { updated_user }.to change { user.reload.title }
-          .to(updated_attributes[:title])
+                                       .to(updated_attributes[:title])
       end
 
       it 'should update the organization_name' do
         expect { updated_user }.to change { user.reload.organization_name }
-          .to(updated_attributes[:organization_name])
+                                       .to(updated_attributes[:organization_name])
       end
 
       it 'should unassign the old role' do
@@ -503,25 +508,25 @@ RSpec.describe G5Authenticatable::User do
 
     let(:auth_data) do
       OmniAuth::AuthHash.new(
-        'provider' => user_attributes[:provider],
-        'uid' => user_attributes[:uid],
-        'info' => {
-          'email' => user_attributes[:email],
-          'first_name' => user_attributes[:first_name],
-          'last_name' => user_attributes[:last_name],
-          'phone' => user_attributes[:phone_number]
-        },
-        'credentials' => {
-          'token' => user_attributes[:g5_access_token],
-          'expires' => true,
-          'expires_at' => Time.now + 1000
-        },
-        'extra' => {
-          'title' => user_attributes[:title],
-          'organization_name' => user_attributes[:organization_name],
-          'roles' => roles,
-          'raw_info' => {}
-        }
+          'provider'    => user_attributes[:provider],
+          'uid'         => user_attributes[:uid],
+          'info'        => {
+              'email'      => user_attributes[:email],
+              'first_name' => user_attributes[:first_name],
+              'last_name'  => user_attributes[:last_name],
+              'phone'      => user_attributes[:phone_number]
+          },
+          'credentials' => {
+              'token'      => user_attributes[:g5_access_token],
+              'expires'    => true,
+              'expires_at' => Time.now + 1000
+          },
+          'extra'       => {
+              'title'             => user_attributes[:title],
+              'organization_name' => user_attributes[:organization_name],
+              'roles'             => roles,
+              'raw_info'          => {}
+          }
       )
     end
 
@@ -532,7 +537,7 @@ RSpec.describe G5Authenticatable::User do
 
       it 'will add a global role' do
         expect { user.update_roles_from_auth(auth_data) }
-          .to change { user.roles.length }.from(0).to(1)
+            .to change { user.roles.length }.from(0).to(1)
         expect(user.roles.first.name).to eq('admin')
         expect(user.roles.first.resource).to be_nil
       end
@@ -545,7 +550,7 @@ RSpec.describe G5Authenticatable::User do
 
       it 'will add a scoped role' do
         expect { user.update_roles_from_auth(auth_data) }
-          .to change { user.roles.length }.from(0).to(1)
+            .to change { user.roles.length }.from(0).to(1)
         expect(user.roles.first.name).to eq('viewer')
         expect(user.roles.first.resource_id).to eq(resource.id)
         expect(user.roles.first.resource_type).to eq(resource.class.name)
@@ -555,14 +560,14 @@ RSpec.describe G5Authenticatable::User do
     context 'with a more than 1 role' do
       let(:roles) do
         [
-          { name: 'viewer', type: resource.class.name, urn: resource.urn },
-          { name: 'admin', type: 'GLOBAL', urn: nil }
+            { name: 'viewer', type: resource.class.name, urn: resource.urn },
+            { name: 'admin', type: 'GLOBAL', urn: nil }
         ]
       end
 
       it 'will add a scoped role' do
         expect { user.update_roles_from_auth(auth_data) }
-          .to change { user.roles.length }.from(0).to(2)
+            .to change { user.roles.length }.from(0).to(2)
       end
     end
 
@@ -575,7 +580,7 @@ RSpec.describe G5Authenticatable::User do
 
       it 'will add a scoped role' do
         expect { user.update_roles_from_auth(auth_data) }
-          .to_not change { user.roles.length }
+            .to_not change { user.roles.length }
       end
     end
 
@@ -584,21 +589,21 @@ RSpec.describe G5Authenticatable::User do
 
       it 'will add a scoped role' do
         expect { user.update_roles_from_auth(auth_data) }
-          .to_not change { user.roles.length }.from(0)
+            .to_not change { user.roles.length }.from(0)
       end
     end
 
     context 'with a bad role type' do
       let(:roles) do
         [
-          { name: 'viewer', type: resource.class.name, urn: resource.urn },
-          { name: 'viewer', type: 'BadResource', urn: resource.urn }
+            { name: 'viewer', type: resource.class.name, urn: resource.urn },
+            { name: 'viewer', type: 'BadResource', urn: resource.urn }
         ]
       end
 
       it 'will skip the bad role' do
         expect { user.update_roles_from_auth(auth_data) }
-          .to change { user.roles.length }.from(0).to(1)
+            .to change { user.roles.length }.from(0).to(1)
         expect(user.roles.first.name).to eq('viewer')
         expect(user.roles.first.resource_id).to eq(resource.id)
         expect(user.roles.first.resource_type).to eq(resource.class.name)

@@ -9,6 +9,7 @@ module G5Authenticatable
 
     validates :email, presence: true, uniqueness: true
     validates_uniqueness_of :uid, scope: :provider
+    attr_accessor :current_client_urn # helpful for authorizing in Pudit
 
     GLOBAL_ROLE = 'GLOBAL'
 
