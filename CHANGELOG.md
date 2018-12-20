@@ -1,3 +1,5 @@
+## v1.1.2 (2018-12-20)
+* Adding `User.current_client_urn` to better support Pundit authorization
 ## v1.1.1 (2018-06-21)
 
 * Support rails 5.2 green field apps, including fixes for setting the default
