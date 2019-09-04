@@ -75,9 +75,7 @@ root to: 'home#index'
 
 ### Registering your OAuth application
 
-1. Visit the auth server admin console and login:
-  * For development, visit https://auth-staging.g5devops.com/admin
-  * For production, visit https://auth.g5search.com/admin
+1. Visit the auth server admin console and login to https://auth.g5search.com/admin
 2. Click "New Application"
 3. Enter a name that recognizably identifies your application.
 4. Enter the redirect URI where the auth server should redirect
@@ -90,8 +88,7 @@ root to: 'home#index'
    http://localhost:3000/g5_auth/users/auth/g5/callback is fine if your browser
    and client application server are both local).
 
-   If you are using the production G5 Auth server, the redirect URI **MUST**
-   use HTTPS.
+   If you have a production application, the redirect URI **MUST** use HTTPS.
 5. For a trusted G5 application, check the "Auto-authorize?" checkbox. This
    skips the OAuth authorization step where the user is prompted to explicitly
    authorize the client application to access the user's data.
@@ -106,8 +103,7 @@ environment variables for your client application:
 * `G5_AUTH_CLIENT_SECRET` - the OAuth 2.0 application secret from the auth server
 * `G5_AUTH_REDIRECT_URI` - the OAuth 2.0 redirect URI registered with the auth server
 * `G5_AUTH_ENDPOINT` - the endpoint URL (without any path info) for the G5 auth server.
-  Generally, this will be set to either `https://auth-staging.g5devops.com` or
-  `https://auth.g5search.com` (the default).
+  Generally, this should be `https://auth.g5search.com`.
 
 If you need to make server-to-server API calls that are not associated with an
 end user, you can also set up a default user's credentials with:
