@@ -7,19 +7,19 @@ FactoryBot.define do
 
   factory :g5_authenticatable_super_admin_role,
           parent: :g5_authenticatable_role do
-    name 'super_admin'
+    name { 'super_admin' }
   end
 
   factory :g5_authenticatable_admin_role, parent: :g5_authenticatable_role do
-    name 'admin'
+    name { 'admin' }
   end
 
   factory :g5_authenticatable_editor_role, parent: :g5_authenticatable_role do
-    name 'editor'
+    name { 'editor' }
   end
 
   factory :g5_authenticatable_viewer_role, parent: :g5_authenticatable_role do
-    name 'viewer'
+    name { 'viewer' }
   end
 
   factory :g5_authenticatable_client_role, parent: :g5_authenticatable_role do
@@ -28,17 +28,17 @@ FactoryBot.define do
 
   factory :g5_authenticatable_client_admin_role,
           parent: :g5_authenticatable_client_role do
-    name 'admin'
+    name { 'admin' }
   end
 
   factory :g5_authenticatable_client_editor_role,
           parent: :g5_authenticatable_client_role do
-    name 'editor'
+    name { 'editor' }
   end
 
   factory :g5_authenticatable_client_viewer_role,
           parent: :g5_authenticatable_client_role do
-    name 'viewer'
+    name { 'viewer' }
   end
 
   factory :g5_authenticatable_location_role,
@@ -48,16 +48,16 @@ FactoryBot.define do
 
   factory :g5_authenticatable_location_admin_role,
           parent: :g5_authenticatable_location_role do
-    name 'admin'
+    name { 'admin' }
   end
 
   factory :g5_authenticatable_location_editor_role,
           parent: :g5_authenticatable_location_role do
-    name 'editor'
+    name { 'editor' }
   end
 
   factory :g5_authenticatable_location_viewer_role,
           parent: :g5_authenticatable_location_role do
-    name 'viewer'
+    name { 'viewer' }
   end
 end
