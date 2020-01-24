@@ -39,7 +39,7 @@ module G5Authenticatable
       def add_api_user_roles
         user.roles.clear
         api_user.roles.each do |role|
-          role.type == G5Authenticatable::User::GLOBAL_ROLE ? user.add_role(role.name) : user.send(:add_scoped_role, role)
+          role.type == G5Authenticatable::User::GLOBAL_ROLE ? user.add_role(role.name) : user.add_scoped_role(role)
         end
       end
 

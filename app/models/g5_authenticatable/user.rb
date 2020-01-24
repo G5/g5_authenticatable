@@ -45,9 +45,7 @@ module G5Authenticatable
       G5Updatable::LocationPolicy::Scope.new(self, G5Updatable::Location)
                                         .resolve
     end
-
-    private
-
+    
     def add_scoped_role(role)
       the_class = Object.const_get(role.type)
       resource = the_class.where(urn: role.urn).first
