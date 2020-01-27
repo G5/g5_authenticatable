@@ -1,12 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe G5Authenticatable::UserFromAccessToken do
-  let(:request) { double(:request, params: {}, headers: {}) }
-  let(:warden) { double(:warden) }
+RSpec.describe G5Authenticatable::UserFromAuthUser do
   let(:location) { FactoryBot.create(:g5_updatable_location) }
   let(:client) { location.client }
   let(:client_urn) { client.urn }
-  subject { G5Authenticatable::User.find_or_create_from_access_token_request(request, warden) }
+  subject do
+    G5Authenticatable::User.create_or_find_from_auth_user(auth_user:       auth_user,
+                                                          g5_access_token: g5_access_token)
+  end
   let(:global_client_user) do
     { "id"                                  => 8,
       "email"                               => "perry.hertler+byron@getg5.com",
@@ -31,16 +32,8 @@ RSpec.describe G5Authenticatable::UserFromAccessToken do
       "accessible_applications"             => [{ "url" => "global", "accessible_products" => [] }],
       "restricted_application_redirect_url" => "" }
   end
-  let(:access_token) { 'afds' }
-  let(:api_user) { G5AuthenticationClient::User.new(user_hash) }
-  let(:user_fetcher) do
-    instance_double(G5AuthenticatableApi::Services::UserFetcher,
-                    current_user: api_user,
-                    access_token: access_token)
-  end
-  before do
-    allow(G5AuthenticatableApi::Services::UserFetcher).to receive(:new).and_return(user_fetcher)
-  end
+  let(:g5_access_token) { 'afds' }
+  let(:auth_user) { G5AuthenticationClient::User.new(user_hash) }
 
   context 'super admin' do
     let(:user_hash) { super_admin_user }
@@ -52,13 +45,6 @@ RSpec.describe G5Authenticatable::UserFromAccessToken do
     it 'creates super admin role' do
       expect { subject }.to change { G5Authenticatable::Role.count }.by(1)
       expect(G5Authenticatable::Role.last.name).to eq('super_admin')
-    end
-
-    it 'instantiates UserFetcher correctly' do
-      subject
-      expect(G5AuthenticatableApi::Services::UserFetcher).to have_received(:new).with(request.params,
-                                                                                      request.headers,
-                                                                                      warden)
     end
   end
 
@@ -84,7 +70,7 @@ RSpec.describe G5Authenticatable::UserFromAccessToken do
       user = G5Authenticatable::User.new(provider:        :g5,
                                          uid:             33,
                                          g5_access_token: 'token')
-      user.assign_attributes(api_user.except(:roles, :id))
+      user.assign_attributes(auth_user.except(:roles, :id))
       user.save
       user
     end

@@ -3,7 +3,7 @@
 module G5Authenticatable
   # Cache of local user data, populated based on G5 Auth
   class User < ActiveRecord::Base
-    include UserFromAccessToken
+    include UserFromAuthUser
     devise :g5_authenticatable, :trackable, :timeoutable
     rolify role_cname: 'G5Authenticatable::Role',
            role_join_table_name: :g5_authenticatable_users_roles
