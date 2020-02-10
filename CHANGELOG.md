@@ -1,3 +1,5 @@
+## v1.2.0 (2020-01-24)
+* Adding `User.find_or_create_from_access_token_request` to support access_token-based Pundit authorization
 ## v1.1.2 (2018-12-20)
 * Adding `User.current_client_urn` to better support Pundit authorization
 ## v1.1.1 (2018-06-21)

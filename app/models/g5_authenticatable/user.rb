@@ -3,6 +3,7 @@
 module G5Authenticatable
   # Cache of local user data, populated based on G5 Auth
   class User < ActiveRecord::Base
+    include UserFromAuthUser
     devise :g5_authenticatable, :trackable, :timeoutable
     rolify role_cname: 'G5Authenticatable::Role',
            role_join_table_name: :g5_authenticatable_users_roles
@@ -44,9 +45,7 @@ module G5Authenticatable
       G5Updatable::LocationPolicy::Scope.new(self, G5Updatable::Location)
                                         .resolve
     end
-
-    private
-
+    
     def add_scoped_role(role)
       the_class = Object.const_get(role.type)
       resource = the_class.where(urn: role.urn).first
