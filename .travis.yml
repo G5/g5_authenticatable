@@ -18,8 +18,9 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
   - cp spec/dummy/config/database.yml.ci spec/dummy/config/database.yml
-  - RAILS_ENV=test bundle exec rake app:db:create app:db:migrate
+  - psql -c 'create database g5_authenticatable_test;' -U postgres
 script:
+  - bundle exec rake db:migrate RAILS_ENV=test
   - bundle exec rspec spec
 after_script:
   - ./cc-test-reporter after-build --exit-code $EXIT_CODE
