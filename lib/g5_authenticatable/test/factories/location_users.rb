@@ -3,9 +3,9 @@
 FactoryBot.define do
   factory :g5_authenticatable_location_user, parent: :g5_authenticatable_user do
     transient do
-      locations nil
-      location_count 1
-      role_factory :g5_authenticatable_location_role
+      locations {nil}
+      location_count {1}
+      role_factory {:g5_authenticatable_location_role}
     end
 
     after(:create) do |user, evaluator|
@@ -25,21 +25,21 @@ FactoryBot.define do
   factory :g5_authenticatable_location_admin,
           parent: :g5_authenticatable_location_user do
     transient do
-      role_factory :g5_authenticatable_location_admin_role
+      role_factory {:g5_authenticatable_location_admin_role}
     end
   end
 
   factory :g5_authenticatable_location_editor,
           parent: :g5_authenticatable_location_user do
     transient do
-      role_factory :g5_authenticatable_location_editor_role
+      role_factory {:g5_authenticatable_location_editor_role}
     end
   end
 
   factory :g5_authenticatable_location_viewer,
           parent: :g5_authenticatable_location_user do
     transient do
-      role_factory :g5_authenticatable_location_viewer_role
+      role_factory {:g5_authenticatable_location_viewer_role}
     end
   end
 end
