@@ -1,3 +1,9 @@
+## v1.2.1 (2020-03-21)
+* Fixing FactoryBotFactories to actual work with FactoryBot
+* Apps using FactoryBot that include this gem blow up when loading g5_authenticatable's factories
+because assignments require the new `{}` syntax 
+
+
 ## v1.2.0 (2020-01-24)
 * Adding `User.find_or_create_from_access_token_request` to support access_token-based Pundit authorization
 ## v1.1.2 (2018-12-20)
