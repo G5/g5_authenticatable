@@ -42,7 +42,8 @@ module G5Authenticatable
           roles: user.roles.collect do |role|
             { name: role.name, type: 'GLOBAL', urn: nil }
           end,
-          raw_info: {}
+          raw_info: { accessible_applications: [{ url: 'global' }],
+                      restricted_application_redirect_url: 'https://imc.com'}
         }
       end
     end

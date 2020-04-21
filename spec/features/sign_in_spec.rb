@@ -31,7 +31,8 @@ RSpec.describe 'Signing in' do
             title: updated_title,
             organization_name: updated_organization_name,
             roles: [{ name: updated_role.name, type: 'GLOBAL', urn: nil }],
-            raw_info: {}
+            raw_info: { accessible_applications: [{ url: 'global' }],
+                        restricted_application_redirect_url: 'https://imc.com'}
           }
         )
       end
@@ -130,7 +131,8 @@ RSpec.describe 'Signing in' do
             title: user_attributes[:title],
             organization_name: user_attributes[:organization_name],
             roles: [{ name: role_attributes[:name], type: 'GLOBAL', urn: nil }],
-            raw_info: {}
+            raw_info: { accessible_applications: [{ url: 'global' }],
+                        restricted_application_redirect_url: 'https://imc.com'}
           }
         )
       end
