@@ -16,7 +16,7 @@ module G5Authenticatable
           render status: :forbidden, json: { error: 'Access forbidden' }
         end
         format.html do
-          render status: :forbidden, file: "#{Rails.root}/public/403"
+          render status: :forbidden, file: Rails.root.join('public', '403.html')
         end
       end
     end
