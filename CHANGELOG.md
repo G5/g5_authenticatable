@@ -1,3 +1,5 @@
+## v1.2.2 (2021-02-03)
+* Render files the Rails 6 way https://github.com/G5/g5_authenticatable/pull/66
 ## v1.2.1 (2020-04-10)
 * Syntax updates so included factories work with newer versions of FactoryBot
 ## v1.2.0 (2020-01-24)
