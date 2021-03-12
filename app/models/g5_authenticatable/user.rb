@@ -48,7 +48,7 @@ module G5Authenticatable
     
     def add_scoped_role(role)
       the_class = Object.const_get(role.type)
-      resource = the_class.where(urn: role.urn).first
+      resource = the_class.where(urn: role.urn).select(:id).first
       add_role(role.name, resource) if resource.present?
     rescue => e
       Rails.logger.error(e)
